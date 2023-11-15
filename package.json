@@ -12,5 +12,8 @@
     "chat"
   ],
   "author": "morgreek",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@hexlet/chat-server": "^1.1.8"
+  }
 }
