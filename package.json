@@ -4,7 +4,10 @@
   "description": "Four Hexlet project",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npm run build --prefix slackchat",
+    "start": "start-server -s ./slackchat/build",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "cd slackchat && npm ci"
   },
   "keywords": [
     "simple",
