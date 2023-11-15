@@ -2,7 +2,7 @@ install:
 	npm ci
 
 render-build:
-	make install && npm run build
+	npm install && npm run build
 
 render-start:
 	npm run start
