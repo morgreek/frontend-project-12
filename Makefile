@@ -11,7 +11,7 @@ start-backend:
 	npx start-server
 
 start-frontend:
-	make -C slack-project start
+	make -C slackchat start
 
 start:
 	make start-backend & make start-frontend
