@@ -10,8 +10,8 @@ export default function ChatWindow() {
           </div>
           <div id="messages-box" className="chat-messages overflow-auto px-5 ">
             <div className="text-break mb-2">
-              <b>Отправитель</b>
-              : Сообщение отправителя
+              <b>Отправитель: </b>
+              Сообщение отправителя
             </div>
           </div>
           <div className="mt-auto px-5 py-3">
