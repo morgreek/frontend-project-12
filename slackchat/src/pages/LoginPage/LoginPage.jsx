@@ -3,7 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { useAuthorizationContext } from '../../hooks/useAuthorizationContext.js';
 import { useFormik } from 'formik';
 import axios from 'axios';
-import './LoginPage.css';
+
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 export default function LoginPage() {
     const { setLogin } = useAuthorizationContext();
@@ -36,29 +41,43 @@ export default function LoginPage() {
     });
 
     return (
-        <form onSubmit={ formik.handleSubmit }>
-            <div className='input-login'>
-                <input 
-                    id='username'
-                    name='username'
-                    placeholder='Ваш ник'
-                    ref={loginInput}
-                    onChange={formik.handleChange}
-                    value={formik.values.username}
-                />
-                <input 
-                    id='password'
-                    name='password'
-                    type='password'
-                    placeholder='Пароль'
-                    onChange={formik.handleChange}
-                    value={formik.values.password}
-
-                />
-                {loginFailedError && (<h1>{loginFailedError}</h1>)}
-
-                <button type="submit">Войти</button>
-            </div>
-        </form>
+        <Container fluid className="h-100">
+            <Row className="justify-content-center align-content-center h-100">
+                <Col sm={4}>
+                    <Form onSubmit={formik.handleSubmit} className="p-3">
+                        <Form.Group>
+                            <Form.Label htmlFor="username">Username</Form.Label>
+                            <Form.Control
+                                onChange={formik.handleChange}
+                                value={formik.values.username}
+                                placeholder="Ваш ник"
+                                name="username"
+                                id="username"
+                                autoComplete="username"
+                                isInvalid={ !!loginFailedError }
+                                required
+                                ref={ loginInput }
+                            />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label htmlFor="password">Password</Form.Label>
+                            <Form.Control
+                                type="password"
+                                onChange={ formik.handleChange }
+                                value={ formik.values.password }
+                                placeholder="password"
+                                name="password"
+                                id="password"
+                                autoComplete="current-password"
+                                isInvalid={ !!loginFailedError }
+                                required
+                            />
+                            <Form.Control.Feedback type="invalid">{ loginFailedError }</Form.Control.Feedback>
+                        </Form.Group>
+                        <Button type="submit" variant="outline-primary" className="mt-2">Войти</Button>
+                    </Form>
+                </Col>
+            </Row>
+        </Container>
     );
 }
