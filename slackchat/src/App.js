@@ -10,13 +10,15 @@ function App() {
   return (
     <AuthorizationContextProvider>
       <BrowserRouter>
-        <Routes>
-          <Route element={<PrivateRoutes/>}>
-            <Route element={<MainPage/>} path="/" exact/>
-          </Route>
-          <Route path="/login" element={<LoginPage/>}/>
-          <Route path="*" element={<NotFoundPage/>}/>
-        </Routes>
+        <div className="d-flex flex-column vh-100">
+          <Routes>
+            <Route element={<PrivateRoutes/>}>
+              <Route element={<MainPage/>} path="/" exact/>
+            </Route>
+            <Route path="/login" element={<LoginPage/>}/>
+            <Route path="*" element={<NotFoundPage/>}/>
+          </Routes>
+        </div>
       </BrowserRouter> 
     </AuthorizationContextProvider>
   );

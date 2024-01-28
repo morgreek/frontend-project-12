@@ -1,6 +1,10 @@
 import Col from 'react-bootstrap/Col';
+import ChannelItem from './channelItem';
 
-export default function ChannelList({ children }) {
+
+export default function ChannelList({ channels }) {
+    const channelMap = ({id, name}) => <ChannelItem id={id} name={name}/>
+
     return (
         <Col md={2} className="col-4 border-end pt-5 px-0 bg-light">
             <div className="d-flex justify-content-between mb-2 ps-4 pe-2">
@@ -14,7 +18,7 @@ export default function ChannelList({ children }) {
                 </button>
             </div>
             <ul className="nav flex-column nav-pills nav-fill px-2">
-                { children }
+                { channels.map(channelMap) }
             </ul>
         </Col>
     );

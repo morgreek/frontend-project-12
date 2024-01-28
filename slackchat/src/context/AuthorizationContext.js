@@ -3,10 +3,13 @@ import { createContext, useState } from 'react';
 const AuthorizationContext = createContext({});
 
 const AuthorizationContextProvider = ({ children }) => {
-    const [isLogged, setLogin] = useState(() => !!localStorage.getItem('user'));
+    const [userData, setLogin] = useState(() => {
+        const userLocal = localStorage.getItem('user');
+        return userLocal ? JSON.parse(userLocal) : null;
+    });
 
     return (
-        <AuthorizationContext.Provider value={{isLogged, setLogin}}>
+        <AuthorizationContext.Provider value={{userData, setLogin}}>
             { children }
         </AuthorizationContext.Provider>
     )

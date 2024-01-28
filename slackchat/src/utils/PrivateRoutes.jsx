@@ -2,9 +2,9 @@ import { Outlet, Navigate } from 'react-router-dom';
 import { useAuthorizationContext } from '../hooks/useAuthorizationContext.js';
 
 const PrivateRoutes = () => {
-    const { isLogged } = useAuthorizationContext();
+    const { userData } = useAuthorizationContext();
     return (
-        isLogged ? <Outlet /> : <Navigate to="/login" />
+        !!userData ? <Outlet /> : <Navigate to="/login" />
     )
 }
 
