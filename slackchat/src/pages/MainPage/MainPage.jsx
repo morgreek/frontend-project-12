@@ -12,41 +12,48 @@ import { useAuthorizationContext } from '../../hooks/useAuthorizationContext';
 import { selectors as channelsSelectors, actions as channelsActions } from '../../slices/channelsSlice.js';
 import { selectors as messagesSelectors, actions as messagesActions } from '../../slices/messagesSlice.js';
 
-const socket = io();
+const socket = io('http://localhost:3000');
 
 export default function MainPage() {
-  const getHeader = () => {
-    const user = JSON.parse(localStorage.getItem('user'));
-    if (user && user.token) {
-      return { Authorization: `Bearer ${user.token}` };
-    }
-    return;
-  }
-  const [currentChannelId, setCurrentChannelId] = useState(1);
-  const channels = useSelector(channelsSelectors.selectAll);
-  const currentChannel = useSelector((state) => (
-    channelsSelectors.selectById(state, currentChannelId)
-  ));
-  const channelMessages = useSelector(messagesSelectors.selectAll).filter(({ channelId }) => channelId === currentChannelId);
-
   const auth = useAuthorizationContext();
   const dispatch = useDispatch();
 
-  socket.on('newMessage', (payload) => {
-    dispatch(messagesActions.addMessage(payload));
+  const [currentChannelId, setCurrentChannelId] = useState(1);
+  const channels = useSelector(channelsSelectors.selectAll);
+  const currentChannel = useSelector((state) => {
+    channelsSelectors.selectById(state, currentChannelId)
   });
-  const submitMessage = (message) => socket.emit(
-    'newMessage',
-    { body: message, channelId: currentChannelId, username: auth.userData.username },
-  );
+  const channelMessages = useSelector(messagesSelectors.selectAll).filter(({ channelId }) => channelId === currentChannelId);
+
+  const submitMessage = (message) => {
+    socket.emit(
+      'newMessage',
+      { body: message, channelId: currentChannelId, username: auth.userData.username }
+    );
+  }
+
+  const getHeaderRequest = () => {
+    return auth?.userData?.token 
+      ? { Authorization: `Bearer ${auth.userData.token}` }
+      : {};
+  }
 
   useEffect(() => {
+    // const socket = io();
+    // socket.connect();
+    // socket.on('newMessage', (message) => {
+    //   dispatch(messagesActions.addMessage(message));
+    // });
     const getData = async () => {
-      const { data } =  await axios.get('/api/v1/data', { headers: getHeader() });
+      const { data } =  await axios.get('/api/v1/data', { headers: getHeaderRequest() });
       dispatch(channelsActions.addChannels(data.channels));
       dispatch(messagesActions.addMessages(data.messages));
     }
     getData();
+    socket.connect();
+    socket.on('newMessage', (message) => {
+      dispatch(messagesActions.addMessage(message));
+    });
   }, [auth.userData, dispatch]);
 
   return (
