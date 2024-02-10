@@ -1,6 +1,6 @@
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import ChannelList from "../../components/channelList";
+import ChannelList from '../../components/ChannelList';
 import ChatWindow from "../../components/chatWindow";
 
 import axios from 'axios';
@@ -12,18 +12,29 @@ import { useAuthorizationContext } from '../../hooks/useAuthorizationContext';
 import { selectors as channelsSelectors, actions as channelsActions } from '../../slices/channelsSlice.js';
 import { selectors as messagesSelectors, actions as messagesActions } from '../../slices/messagesSlice.js';
 
-const socket = io('http://localhost:3000');
+import getModalComponent from '../../components/modal/index'
+
+const socket = io();
 
 export default function MainPage() {
   const auth = useAuthorizationContext();
   const dispatch = useDispatch();
-
+  const [modalState, setModalState] = useState({});
   const [currentChannelId, setCurrentChannelId] = useState(1);
   const channels = useSelector(channelsSelectors.selectAll);
   const currentChannel = useSelector((state) => {
-    channelsSelectors.selectById(state, currentChannelId)
+    return channelsSelectors.selectById(state, currentChannelId);
   });
   const channelMessages = useSelector(messagesSelectors.selectAll).filter(({ channelId }) => channelId === currentChannelId);
+
+  const renameChannel = (id, name) => {
+    dispatch(channelsActions.updateChannel({id, changes:{ name }}))
+  }
+  const removeChannel = (id) => {
+    socket.emit('removeChannel', {id});
+    dispatch(channelsActions.removeChannel(id));
+    setCurrentChannelId(1);
+  }
 
   const submitMessage = (message) => {
     socket.emit(
@@ -39,11 +50,6 @@ export default function MainPage() {
   }
 
   useEffect(() => {
-    // const socket = io();
-    // socket.connect();
-    // socket.on('newMessage', (message) => {
-    //   dispatch(messagesActions.addMessage(message));
-    // });
     const getData = async () => {
       const { data } =  await axios.get('/api/v1/data', { headers: getHeaderRequest() });
       dispatch(channelsActions.addChannels(data.channels));
@@ -54,14 +60,46 @@ export default function MainPage() {
     socket.on('newMessage', (message) => {
       dispatch(messagesActions.addMessage(message));
     });
-  }, [auth.userData, dispatch]);
+    socket.on('removeChannel', ({id}) => {
+      // dispatch(channelsActions.removeChannel(id));
+    });
+  }, [auth.userData, dispatch, currentChannelId]);
+
+  const renderModal = (parameters) => {
+    const {
+      modalCode,
+      title,
+      confirmButton,
+      btnVariant,
+      confirmText,
+      channel,
+      channels,
+      confirmAction
+    } = parameters;
+    const ModalComponent = getModalComponent(modalCode);
+    if (!ModalComponent) return null;
+
+    return (
+      <ModalComponent
+        title={title}
+        confirmButton={confirmButton}
+        btnVariant={btnVariant}
+        confirmText={confirmText}
+        channel={channel}
+        channels={channels}
+        confirmAction={confirmAction}
+        onHide={() => setModalState({})}
+      />
+    );
+  }
 
   return (
     <Container className="h-100 my-4 overflow-hidden rounded shadow">
       <Row className="h-100 bg-white flex-md-row">
-        <ChannelList channels={channels} />
+        <ChannelList channels={channels} channel={currentChannel} showModal={setModalState} setActive={setCurrentChannelId} renameChannel={renameChannel} removeChannel={removeChannel}/>
         <ChatWindow channel={currentChannel} messages={channelMessages} submitMessage={submitMessage}/>
       </Row>
+      {renderModal(modalState)}
     </Container>
   );
 }
