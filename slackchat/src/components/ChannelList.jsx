@@ -7,6 +7,7 @@ export default function ChannelList(props) {
         channels,
         setActive,
         showModal,
+        addChannel,
         renameChannel,
         removeChannel,
      } = props;
@@ -15,15 +16,18 @@ export default function ChannelList(props) {
         showModal({
             modalCode:'addChannel',
             title: 'Добавить канал',
-            channels
+            channels,
+            confirmAction: addChannel,
         })
     }
 
-    const onRenameChannel = () => {
+    const onRenameChannel = (id) => {
+        const currentChannel = channels.filter((item) => item.id === id)[0];
+
         showModal({
             modalCode:'editChannel',
             title: 'Переименовать канал',
-            channel,
+            channel: currentChannel,
             channels,
             confirmAction: renameChannel,
         });

@@ -35,10 +35,12 @@ export default function ConfirmModal ({children, ...rest}) {
             </Modal.Header>
             <Modal.Body>
                 <Form onSubmit={sumbitHandler}>
-                    <p className="lead">{confirmText}</p>
-                    <Modal.Footer>
-                        <ConfirmButtons parameters={parameters} onHide={onHide}/>
-                    </Modal.Footer>
+                    <fieldset>
+                        <p className="lead">{confirmText}</p>
+                        <Modal.Footer>
+                            <ConfirmButtons parameters={parameters} onHide={onHide}/>
+                        </Modal.Footer>
+                    </fieldset>
                 </Form>
             </Modal.Body>
         </Modal>

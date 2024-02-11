@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import { Form, Modal, Stack } from 'react-bootstrap';
@@ -24,7 +25,15 @@ export default function EditChannelModal ({children, ...rest}) {
             variant: 'secondary',
         }
     };
-    
+
+    const inputRef = useRef();
+    useEffect(() => {
+        inputRef.current.focus();
+    });
+    useEffect(() => {
+        inputRef.current.select();
+    }, []);
+
     const channelsNames = channels
         .map((channel) => channel.name)
         .filter((name) => name !== channel?.name )
@@ -46,12 +55,16 @@ export default function EditChannelModal ({children, ...rest}) {
 
         validationSchema,
 
-        onSubmit: () => {
-            console.log('test sumbitted')
+        onSubmit: (values) => {
+            if (channel) {
+                confirmAction(channel.id, values.channelName);
+            }
+            if (!channel) {
+                confirmAction(values.channelName);
+            }
+            onHide();
         }
     });
-
-    const isInvalid = formik.errors.channelName && formik.touched.channelName;
 
     return (
         <Modal show onHide={onHide} centered keyboard>
@@ -60,23 +73,25 @@ export default function EditChannelModal ({children, ...rest}) {
             </Modal.Header>
             <Modal.Body>
                 <Form onSubmit={formik.handleSubmit}>
-                    <Stack gap={2}>
-                        <Form.Group className="position-relative">
-                            <Form.Control
-                                value={formik.values.channelName}
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                                isInvalid={isInvalid}
-                                name="channelName"
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                {formik.errors.channelName}
-                            </Form.Control.Feedback>
-                        </Form.Group>
-                    </Stack>
-                    <Modal.Footer>
-                        <ConfirmButtons parameters={parameters} onHide={onHide}/>
-                    </Modal.Footer>
+                    <fieldset disabled={formik.isSubmitting}>
+                        <Stack gap={2}>
+                            <Form.Group className="position-relative">
+                                <Form.Control
+                                    ref={inputRef}
+                                    value={formik.values.channelName}
+                                    onChange={formik.handleChange}
+                                    isInvalid={formik.touched.channelName && formik.errors.channelName}
+                                    name="channelName"
+                                />
+                                <Form.Control.Feedback type="invalid" className="position-absolute">
+                                    {formik.errors.channelName}
+                                </Form.Control.Feedback>
+                            </Form.Group>
+                        </Stack>
+                        <Modal.Footer>
+                            <ConfirmButtons parameters={parameters} onHide={onHide}/>
+                        </Modal.Footer>
+                    </fieldset>
                 </Form>
             </Modal.Body>
         </Modal>

@@ -20,19 +20,23 @@ export default function MainPage() {
   const auth = useAuthorizationContext();
   const dispatch = useDispatch();
   const [modalState, setModalState] = useState({});
-  const [currentChannelId, setCurrentChannelId] = useState(1);
   const channels = useSelector(channelsSelectors.selectAll);
+  const [currentChannelId, setCurrentChannelId] = useState(1);
   const currentChannel = useSelector((state) => {
     return channelsSelectors.selectById(state, currentChannelId);
   });
   const channelMessages = useSelector(messagesSelectors.selectAll).filter(({ channelId }) => channelId === currentChannelId);
 
-  const renameChannel = (id, name) => {
-    dispatch(channelsActions.updateChannel({id, changes:{ name }}))
+  const addChannel = (name) => {
+    socket.emit('newChannel', { name });
   }
+
+  const renameChannel = (id, name) => {
+    socket.emit('renameChannel', {id, name});
+  }
+
   const removeChannel = (id) => {
     socket.emit('removeChannel', {id});
-    dispatch(channelsActions.removeChannel(id));
     setCurrentChannelId(1);
   }
 
@@ -55,14 +59,23 @@ export default function MainPage() {
       dispatch(channelsActions.addChannels(data.channels));
       dispatch(messagesActions.addMessages(data.messages));
     }
+
     getData();
+
     socket.connect();
     socket.on('newMessage', (message) => {
       dispatch(messagesActions.addMessage(message));
     });
-    socket.on('removeChannel', ({id}) => {
-      // dispatch(channelsActions.removeChannel(id));
+    socket.on('newChannel', (id) => {
+      dispatch(channelsActions.addChannel(id));
     });
+    socket.on('removeChannel', ({id}) => {
+      dispatch(channelsActions.removeChannel(id));
+    });
+    socket.on('renameChannel', ({id, name}) => {
+      dispatch(channelsActions.updateChannel({id, changes:{ name }}))
+    });
+    
   }, [auth.userData, dispatch, currentChannelId]);
 
   const renderModal = (parameters) => {
@@ -96,7 +109,15 @@ export default function MainPage() {
   return (
     <Container className="h-100 my-4 overflow-hidden rounded shadow">
       <Row className="h-100 bg-white flex-md-row">
-        <ChannelList channels={channels} channel={currentChannel} showModal={setModalState} setActive={setCurrentChannelId} renameChannel={renameChannel} removeChannel={removeChannel}/>
+        <ChannelList 
+          channels={channels}
+          channel={currentChannel}
+          showModal={setModalState}
+          setActive={setCurrentChannelId}
+          addChannel={addChannel}
+          renameChannel={renameChannel}
+          removeChannel={removeChannel}
+        />
         <ChatWindow channel={currentChannel} messages={channelMessages} submitMessage={submitMessage}/>
       </Row>
       {renderModal(modalState)}

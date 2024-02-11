@@ -4,7 +4,7 @@ const renderChannelButton = (parameters) => {
     const {id, name, variant, selectChannel} = parameters;
     return (
         <Button
-            className={`w-100 rounded-0 text-start btn`}
+            className={`w-100 rounded-0 text-start btn text-truncate`}
             variant={variant ? variant : null}
             type="button"
             onClick={() => selectChannel(id)}
@@ -27,8 +27,8 @@ const renderEditableChannel = (parameters) => {
           </Dropdown.Toggle>
 
           <Dropdown.Menu>
-            <Dropdown.Item onClick={() => onRemoveChannel(id)}>{'remove'}</Dropdown.Item>
-            <Dropdown.Item onClick={() => onRenameChannel()}>{'rename'}</Dropdown.Item>
+            <Dropdown.Item onClick={() => onRemoveChannel(id)}>{'Удалить'}</Dropdown.Item>
+            <Dropdown.Item onClick={() => onRenameChannel(id)}>{'Переименовать'}</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
     );
