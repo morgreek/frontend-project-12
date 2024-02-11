@@ -37,7 +37,9 @@ export default function MainPage() {
 
   const removeChannel = (id) => {
     socket.emit('removeChannel', {id});
-    setCurrentChannelId(1);
+    if (currentChannelId === id) {
+      setCurrentChannelId(1);
+    }
   }
 
   const submitMessage = (message) => {
