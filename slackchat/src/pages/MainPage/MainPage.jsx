@@ -1,5 +1,4 @@
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
+import { Container, Row } from 'react-bootstrap';
 import ChannelList from '../../components/ChannelList';
 import ChatWindow from "../../components/chatWindow";
 

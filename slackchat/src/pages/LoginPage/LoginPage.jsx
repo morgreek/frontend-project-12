@@ -4,11 +4,7 @@ import { useAuthorizationContext } from '../../hooks/useAuthorizationContext.js'
 import { useFormik } from 'formik';
 import axios from 'axios';
 
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import { Button, Form, Container, Row, Col} from 'react-bootstrap';
 
 export default function LoginPage() {
     const { setLogin } = useAuthorizationContext();
@@ -25,9 +21,9 @@ export default function LoginPage() {
         onSubmit: async (values) => {
             try {
                 const response = await axios.post('/api/v1/login', values);
+                setLogin(response.data);
                 localStorage.setItem('user', JSON.stringify(response.data));
                 // сервер отвечает: reply.send({ token, username });
-                setLogin(true);
                 navigateTo('/');
             } catch (e) {
                 if (e.response.status === 401) {
