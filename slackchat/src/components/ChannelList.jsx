@@ -50,6 +50,7 @@ export default function ChannelList(props) {
     const renderChannels = (channels, currentChannel) => {
         const channelMap = (channel) => (
              <ChannelItem 
+                key={channel?.id}
                 channel={channel}
                 currentChannel={currentChannel}
                 selectChannel={setActive}
@@ -59,7 +60,7 @@ export default function ChannelList(props) {
         );
         return (
             <ul className="nav flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block">
-                { channels.map(channelMap) }
+                { channels?.map(channelMap) }
             </ul>
         );
     }

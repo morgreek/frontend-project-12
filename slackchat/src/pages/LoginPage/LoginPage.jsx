@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuthorizationContext } from '../../hooks/useAuthorizationContext.js';
 import { useFormik } from 'formik';
 import axios from 'axios';
@@ -41,8 +41,8 @@ export default function LoginPage() {
             <Row className="justify-content-center align-content-center h-100">
                 <Col sm={4}>
                     <Form onSubmit={formik.handleSubmit} className="p-3">
+                        <h1 className="text-center mb-4">Войти</h1>
                         <Form.Group>
-                            <Form.Label htmlFor="username">Username</Form.Label>
                             <Form.Control
                                 onChange={formik.handleChange}
                                 value={formik.values.username}
@@ -56,12 +56,11 @@ export default function LoginPage() {
                             />
                         </Form.Group>
                         <Form.Group>
-                            <Form.Label htmlFor="password">Password</Form.Label>
                             <Form.Control
                                 type="password"
                                 onChange={ formik.handleChange }
                                 value={ formik.values.password }
-                                placeholder="password"
+                                placeholder="Пароль"
                                 name="password"
                                 id="password"
                                 autoComplete="current-password"
@@ -71,6 +70,10 @@ export default function LoginPage() {
                             <Form.Control.Feedback type="invalid">{ loginFailedError }</Form.Control.Feedback>
                         </Form.Group>
                         <Button type="submit" variant="outline-primary" className="mt-2">Войти</Button>
+                        <div className="text-center">
+                            <span>Нет аккаунта? </span>
+                            <Link to="/signup">Регистрация</Link>
+                        </div>
                     </Form>
                 </Col>
             </Row>

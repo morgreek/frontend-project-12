@@ -39,7 +39,8 @@ export default function EditChannelModal ({children, ...rest}) {
         .filter((name) => name !== channel?.name )
 
     const validationSchema = yup.object().shape({
-        channelName: yup.string().trim()
+        channelName: yup.string()
+            .trim()
             .min(3, 'От 3 до 20 символов')
             .max(20, 'От 3 до 20 символов')
             .required('Обязательное поле')
