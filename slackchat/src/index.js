@@ -4,6 +4,7 @@ import App from './App';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Provider } from 'react-redux';
 import store from './slices/index.js';
+import './i18next'
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

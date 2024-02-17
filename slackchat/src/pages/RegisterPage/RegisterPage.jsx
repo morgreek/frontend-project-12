@@ -5,7 +5,7 @@ import * as yup from 'yup';
 import axios from 'axios';
 import { useAuthorizationContext } from '../../hooks/useAuthorizationContext.js'
 import { useNavigate } from 'react-router-dom';
-
+import { useTranslation } from 'react-i18next';
 
 export default function RegisterPage() {
     const { setLogin } = useAuthorizationContext();
@@ -14,6 +14,8 @@ export default function RegisterPage() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const loginInput = useRef();
 
+    const { t } = useTranslation();
+
     useEffect(() => {
         loginInput.current?.focus();
       }, []);
@@ -21,17 +23,17 @@ export default function RegisterPage() {
     const validationSchema = yup.object().shape({
         username: yup.string()
             .trim()
-            .min(3, 'От 3 до 20 символов')
-            .max(20, 'От 3 до 20 символов')
-            .required('Обязательное поле'),
+            .min(3, t('validation.from3To20Chars'))
+            .max(20, t('validation.from3To20Chars'))
+            .required(t('validation.isRequiredField')),
         password: yup.string()
             .trim()
-            .min(6, 'Не менее 6 символов')
-            .required('Обязательное поле'),
+            .min(6, t('validation.least6Chars'))
+            .required(t('validation.isRequiredField')),
         confirmPassword: yup.string()
             .trim()
-            .oneOf([yup.ref('password'), null], 'Пароли должны совпадать')
-            .required('Обязательное поле'),
+            .oneOf([yup.ref('password'), null], t('validation.matchPasswords'))
+            .required(t('validation.isRequiredField')),
     });
 
     const formik = useFormik({
@@ -52,7 +54,7 @@ export default function RegisterPage() {
                 navigateTo('/')
             } catch (e) {
                 if (e.response.status === 409) {
-                    setRegisterFailedError('Такой пользователь уже существует');
+                    setRegisterFailedError( t('validation.areUserExists'));
                 } else {
                     setRegisterFailedError(e.message);
                 }
@@ -65,14 +67,14 @@ export default function RegisterPage() {
             <Row className="justify-content-center align-content-center h-100">
                 <Col sm={4}>
                     <Form onSubmit={formik.handleSubmit} className="p-3">
-                        <h1 className="text-center mb-4">Регистрация</h1>
+                        <h1 className="text-center mb-4">{ t('registration') }</h1>
                         <fieldset disabled={isSubmitting}>
                             <Form.Group>
                                 <Form.Control
                                     onChange={formik.handleChange}
                                     onBlur={formik.handleBlur}
                                     value={formik.values.username}
-                                    placeholder="Имя пользователя"
+                                    placeholder={ t('username') }
                                     name="username"
                                     id="username"
                                     autoComplete="username"
@@ -88,7 +90,7 @@ export default function RegisterPage() {
                                     onChange={ formik.handleChange }
                                     onBlur={formik.handleBlur}
                                     value={ formik.values.password }
-                                    placeholder="Пароль"
+                                    placeholder={t('password')}
                                     name="password"
                                     id="password"
                                     autoComplete="current-password"
@@ -103,7 +105,7 @@ export default function RegisterPage() {
                                     onChange={ formik.handleChange }
                                     onBlur={formik.handleBlur}
                                     value={ formik.values.confirmPassword }
-                                    placeholder="Подтвердите пароль"
+                                    placeholder={t('validation.confirmPassword')}
                                     name="confirmPassword"
                                     id="confirmPassword"
                                     autoComplete="current-password"
@@ -112,7 +114,7 @@ export default function RegisterPage() {
                                 />
                                 <Form.Control.Feedback type="invalid">{ formik.touched.confirmPassword && formik.errors.confirmPassword }</Form.Control.Feedback>
                             </Form.Group>
-                            <Button type="submit" variant="outline-primary" className="mt-2">Зарегистрироваться</Button>
+                            <Button type="submit" variant="outline-primary" className="mt-2">{t('register')}</Button>
                         </fieldset>
                     </Form>
                 </Col>

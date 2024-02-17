@@ -3,16 +3,17 @@ export default {
       logIn: 'Войти',
       logOut: 'Выйти',
       username: 'Имя пользователя',
+      usernick: 'Ваш ник',
       password: 'Пароль',
-      noAppAccount: 'Нет аккаунта? ',
+      noAppAccount: 'Нет аккаунта?',
       registration: 'Регистрация',
       register: 'Зарегистрироваться',
-      areYouSure: 'Вы уверены?',
-      cancel: 'Отменить',
-      send: 'Отправить',
+      areYouSure: 'Вы уверены? i18next',
+      cancel: 'Отменить i18next',
+      send: 'Отправить i18next',
       remove: 'Удалить',
       rename: 'Переименовать',
-      
+
       validation: {
         mustUnique: 'Должно быть уникальным',
         invalidLoginPassword: 'Неверные имя пользователя или пароль',
@@ -23,20 +24,20 @@ export default {
         confirmPassword: 'Подтвердите пароль',
         matchPasswords: 'Пароли должны совпадать',
       },
-      
-      channels: {
-          channelsTitle: 'Каналы',
-          addChannel: 'Добавить канал',
-          renameChannel: 'Переименовать канал',
-          removeChannel: 'Удалить канал',
 
+      channels: {
+        channelsTitle: 'Каналы i18next',
+        addChannel: 'Добавить канал i18next',
+        renameChannel: 'Переименовать канал i18next',
+        removeChannel: 'Удалить канал i18next',
       },
 
       messages: {
-        messagesCount_one: '{{count}} сообщение',
-        messagesCount_few: '{{count}} сообщения',
-        messagesCount_many: '{{count}} сообщений',
-        enterMessage: 'Введите сообщение...',
+        messages_zero: '{{count}} сообщений',
+        messages_one: '{{count}} сообщение',
+        messages_few: '{{count}} сообщения',
+        messages_many: '{{count}} сообщений',
+        enterMessage: 'Введите сообщение... i18next',
       },
     },
   };

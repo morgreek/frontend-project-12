@@ -1,5 +1,6 @@
 import { Container, Navbar, Button } from 'react-bootstrap';
 import { useAuthorizationContext } from '../hooks/useAuthorizationContext';
+import { useTranslation } from 'react-i18next';
 
 const NavigationBar = () => {
   const auth = useAuthorizationContext();
@@ -7,8 +8,8 @@ const NavigationBar = () => {
     auth.setLogin(null)
     localStorage.clear();
   }
-  
-  // as={Link} to={appPaths.chat}
+  const { t } = useTranslation();
+
   return (
     <>
       <Navbar bg="white" expand="lg" className="shadow-sm">
@@ -16,7 +17,7 @@ const NavigationBar = () => {
           <Navbar.Brand>{'Hexlet'}</Navbar.Brand>
           {
             auth.userData
-              ? <Button onClick={handleLogOut}>Выйти</Button>
+              ? <Button onClick={handleLogOut}>{t('logOut')}</Button>
               : null
           }
           

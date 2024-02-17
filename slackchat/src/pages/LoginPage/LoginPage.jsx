@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useAuthorizationContext } from '../../hooks/useAuthorizationContext.js';
 import { useFormik } from 'formik';
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 
 import { Button, Form, Container, Row, Col} from 'react-bootstrap';
 
@@ -11,6 +12,8 @@ export default function LoginPage() {
     const loginInput = useRef();
     const [loginFailedError, setLoginFailedError] = useState('')
     const navigateTo = useNavigate();
+
+    const { t } = useTranslation();
 
     const formik = useFormik({
         initialValues: {
@@ -41,12 +44,12 @@ export default function LoginPage() {
             <Row className="justify-content-center align-content-center h-100">
                 <Col sm={4}>
                     <Form onSubmit={formik.handleSubmit} className="p-3">
-                        <h1 className="text-center mb-4">Войти</h1>
+                        <h1 className="text-center mb-4">{ t('logIn') }</h1>
                         <Form.Group>
                             <Form.Control
                                 onChange={formik.handleChange}
                                 value={formik.values.username}
-                                placeholder="Ваш ник"
+                                placeholder={ t('usernick') }
                                 name="username"
                                 id="username"
                                 autoComplete="username"
@@ -60,7 +63,7 @@ export default function LoginPage() {
                                 type="password"
                                 onChange={ formik.handleChange }
                                 value={ formik.values.password }
-                                placeholder="Пароль"
+                                placeholder={ t('password') }
                                 name="password"
                                 id="password"
                                 autoComplete="current-password"
@@ -69,10 +72,10 @@ export default function LoginPage() {
                             />
                             <Form.Control.Feedback type="invalid">{ loginFailedError }</Form.Control.Feedback>
                         </Form.Group>
-                        <Button type="submit" variant="outline-primary" className="mt-2">Войти</Button>
+                        <Button type="submit" variant="outline-primary" className="mt-2">{ t('logIn') }</Button>
                         <div className="text-center">
-                            <span>Нет аккаунта? </span>
-                            <Link to="/signup">Регистрация</Link>
+                            <span>{ `${t('noAppAccount')} `}</span>
+                            <Link to="/signup">{ t('registration') }</Link>
                         </div>
                     </Form>
                 </Col>

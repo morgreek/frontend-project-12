@@ -1,4 +1,5 @@
 import { Button, ButtonGroup, Dropdown } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 
 const renderChannelButton = (parameters) => {
     const {id, name, variant, selectChannel} = parameters;
@@ -16,7 +17,7 @@ const renderChannelButton = (parameters) => {
 }
 
 const renderEditableChannel = (parameters) => {
-    const {id, name, variant, selectChannel, onRenameChannel, onRemoveChannel } = parameters;
+    const {id, name, variant, selectChannel, onRenameChannel, onRemoveChannel, t } = parameters;
 
     return (
         <Dropdown as={ButtonGroup} className="d-flex">
@@ -27,8 +28,8 @@ const renderEditableChannel = (parameters) => {
           </Dropdown.Toggle>
 
           <Dropdown.Menu>
-            <Dropdown.Item onClick={() => onRemoveChannel(id)}>{'Удалить'}</Dropdown.Item>
-            <Dropdown.Item onClick={() => onRenameChannel(id)}>{'Переименовать'}</Dropdown.Item>
+            <Dropdown.Item onClick={() => onRemoveChannel(id)}>{ t('remove') }</Dropdown.Item>
+            <Dropdown.Item onClick={() => onRenameChannel(id)}>{ t('rename') }</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
     );
@@ -39,11 +40,13 @@ export default function ChannelItem(props) {
     const {id, name, removable} = channel;
     const variant = id === currentChannel.id ? 'secondary' : null;
 
+    const { t } = useTranslation();
+
     return (
         <li key={id} className="nav-item w-100">
             {
                 removable
-                    ? renderEditableChannel({id, name, variant, selectChannel, onRenameChannel, onRemoveChannel})
+                    ? renderEditableChannel({id, name, variant, selectChannel, onRenameChannel, onRemoveChannel, t})
                     : renderChannelButton({id, name, variant, selectChannel})
             }
         </li> 
