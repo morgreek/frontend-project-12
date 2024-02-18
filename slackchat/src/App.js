@@ -11,7 +11,6 @@ import NavigationBar from './components/NavigationBar.jsx';
 import { Provider, ErrorBoundary } from '@rollbar/react';
 import rollbarConfig from './configs/rollbar';
 
-
 function App() {
   return (
     <Provider config={rollbarConfig}>
