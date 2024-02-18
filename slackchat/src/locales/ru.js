@@ -30,6 +30,9 @@ export default {
         addChannel: 'Добавить канал',
         renameChannel: 'Переименовать канал',
         removeChannel: 'Удалить канал',
+        channelAdded: 'Канал создан',
+        channelRemoved: 'Канал удалён',
+        channelRenamed: 'Канал переименован',
       },
 
       messages: {
@@ -39,5 +42,10 @@ export default {
         messages_many: '{{count}} сообщений',
         enterMessage: 'Введите сообщение...',
       },
+
+      errors: {
+        authorization: 'Ошибка авторизации',
+        connection: 'Ошибка соединения',
+      }
     },
   };

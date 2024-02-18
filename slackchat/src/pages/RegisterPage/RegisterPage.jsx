@@ -6,6 +6,7 @@ import axios from 'axios';
 import { useAuthorizationContext } from '../../hooks/useAuthorizationContext.js'
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 
 export default function RegisterPage() {
     const { setLogin } = useAuthorizationContext();
@@ -56,7 +57,8 @@ export default function RegisterPage() {
                 if (e.response.status === 409) {
                     setRegisterFailedError( t('validation.areUserExists'));
                 } else {
-                    setRegisterFailedError(e.message);
+                    setRegisterFailedError('');
+                    toast.error(t('errors.connection'));
                 }
             }
         }

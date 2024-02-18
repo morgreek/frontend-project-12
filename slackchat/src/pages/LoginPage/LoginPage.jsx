@@ -4,10 +4,12 @@ import { useAuthorizationContext } from '../../hooks/useAuthorizationContext.js'
 import { useFormik } from 'formik';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 
 import { Button, Form, Container, Row, Col} from 'react-bootstrap';
 
 export default function LoginPage() {
+
     const { setLogin } = useAuthorizationContext();
     const loginInput = useRef();
     const [loginFailedError, setLoginFailedError] = useState('')
@@ -30,9 +32,10 @@ export default function LoginPage() {
                 navigateTo('/');
             } catch (e) {
                 if (e.response.status === 401) {
-                    setLoginFailedError('Ошибка авторизации');
+                    setLoginFailedError(t('errors.authorization'));
                 } else {
-                    setLoginFailedError(e.message);
+                    setLoginFailedError('');
+                    toast.error(t('errors.connection'));
                 }
                 loginInput.current.reset();
             }

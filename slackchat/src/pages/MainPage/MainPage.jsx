@@ -1,12 +1,14 @@
 import { Container, Row } from 'react-bootstrap';
 import ChannelList from '../../components/ChannelList';
 import ChatWindow from "../../components/chatWindow";
+import { toast } from 'react-toastify';
 
 import axios from 'axios';
 import { io } from "socket.io-client";
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useAuthorizationContext } from '../../hooks/useAuthorizationContext';
+import { useTranslation } from 'react-i18next';
 
 import { selectors as channelsSelectors, actions as channelsActions } from '../../slices/channelsSlice.js';
 import { selectors as messagesSelectors, actions as messagesActions } from '../../slices/messagesSlice.js';
@@ -16,6 +18,7 @@ import getModalComponent from '../../components/modal/index'
 const socket = io();
 
 export default function MainPage() {
+  const { t } = useTranslation();
   const auth = useAuthorizationContext();
   const dispatch = useDispatch();
   const [modalState, setModalState] = useState({});
@@ -63,18 +66,22 @@ export default function MainPage() {
 
     getData();
 
+    socket.removeAllListeners();
     socket.connect();
     socket.on('newMessage', (message) => {
       dispatch(messagesActions.addMessage(message));
     });
     socket.on('newChannel', (id) => {
       dispatch(channelsActions.addChannel(id));
+      toast.info(t('channels.channelAdded'));
     });
     socket.on('removeChannel', ({id}) => {
       dispatch(channelsActions.removeChannel(id));
+      toast.info(t('channels.channelRemoved'));
     });
     socket.on('renameChannel', ({id, name}) => {
-      dispatch(channelsActions.updateChannel({id, changes:{ name }}))
+      dispatch(channelsActions.updateChannel({id, changes:{ name }}));
+      toast.info(t('channels.channelRenamed'));
     });
     
   }, [auth.userData, dispatch, currentChannelId]);
