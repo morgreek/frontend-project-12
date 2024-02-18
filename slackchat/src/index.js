@@ -8,6 +8,9 @@ import { Provider } from 'react-redux';
 import store from './slices/index.js';
 import './i18next'
 import { ToastContainer } from 'react-toastify';
+import filter from 'leo-profanity';
+
+filter.loadDictionary('ru');
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

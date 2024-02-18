@@ -4,6 +4,7 @@ import { useFormik } from 'formik';
 import { Form, Modal, Stack } from 'react-bootstrap';
 import ConfirmButtons from './ConfirmButtons';
 import { useTranslation } from 'react-i18next';
+import filter from 'leo-profanity';
 
 export default function EditChannelModal ({children, ...rest}) {
     const { t } = useTranslation();
@@ -60,10 +61,10 @@ export default function EditChannelModal ({children, ...rest}) {
 
         onSubmit: (values) => {
             if (channel) {
-                confirmAction(channel.id, values.channelName);
+                confirmAction(channel.id, filter.clean(values.channelName));
             }
             if (!channel) {
-                confirmAction(values.channelName);
+                confirmAction(filter.clean(values.channelName));
             }
             onHide();
         }

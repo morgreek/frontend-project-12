@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useTranslation } from 'react-i18next';
+import filter from 'leo-profanity';
 
 export default function MessageSendField({ submitMessage }) {
     const { t } = useTranslation();
@@ -8,10 +9,10 @@ export default function MessageSendField({ submitMessage }) {
     const [isSubmitting, setSubmitting] = useState(false);
     const submitHandler = (e) => {
         e.preventDefault();
-        setSubmitting(true);
-        submitMessage(message);
+        setSubmitting((prev) => true);
+        submitMessage(filter.clean(message));
         setMessage('');
-        setSubmitting(false);
+        setSubmitting((prev) => false);
     }
 
     return(
