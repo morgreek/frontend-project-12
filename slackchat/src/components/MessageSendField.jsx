@@ -1,6 +1,9 @@
 import { useState } from "react";
+import { useTranslation } from 'react-i18next';
 
 export default function MessageSendField({ submitMessage }) {
+    const { t } = useTranslation();
+
     const [message, setMessage] = useState('');
     const [isSubmitting, setSubmitting] = useState(false);
     const submitHandler = (e) => {
@@ -18,7 +21,7 @@ export default function MessageSendField({ submitMessage }) {
                 <input
                     name="body"
                     aria-label="Новое сообщение"
-                    placeholder="Введите сообщение..."
+                    placeholder={t('messages.enterMessage')}
                     className="border-0 p-0 ps-2 form-control"
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}

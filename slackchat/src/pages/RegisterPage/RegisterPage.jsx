@@ -90,7 +90,7 @@ export default function RegisterPage() {
                                     onChange={ formik.handleChange }
                                     onBlur={formik.handleBlur}
                                     value={ formik.values.password }
-                                    placeholder={t('password')}
+                                    placeholder={ t('password') }
                                     name="password"
                                     id="password"
                                     autoComplete="current-password"
@@ -105,7 +105,7 @@ export default function RegisterPage() {
                                     onChange={ formik.handleChange }
                                     onBlur={formik.handleBlur}
                                     value={ formik.values.confirmPassword }
-                                    placeholder={t('validation.confirmPassword')}
+                                    placeholder={ t('confirmPassword') }
                                     name="confirmPassword"
                                     id="confirmPassword"
                                     autoComplete="current-password"

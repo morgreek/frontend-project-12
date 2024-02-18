@@ -3,8 +3,10 @@ import * as yup from 'yup';
 import { useFormik } from 'formik';
 import { Form, Modal, Stack } from 'react-bootstrap';
 import ConfirmButtons from './ConfirmButtons';
+import { useTranslation } from 'react-i18next';
 
 export default function EditChannelModal ({children, ...rest}) {
+    const { t } = useTranslation();
     const {
         title,
         confirmButton,
@@ -17,11 +19,11 @@ export default function EditChannelModal ({children, ...rest}) {
 
     const parameters = {
         confirmButton: {
-            name: confirmButton ?? 'Отправить',
+            name: confirmButton ?? t('send'),
             variant: btnVariant ?? 'primary',
         },
         cancelButton: {
-            name: 'Отменить',
+            name: t('cancel'),
             variant: 'secondary',
         }
     };

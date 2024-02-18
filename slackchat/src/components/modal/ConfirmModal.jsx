@@ -1,7 +1,9 @@
 import { Form, Modal } from 'react-bootstrap';
 import ConfirmButtons from './ConfirmButtons';
+import { useTranslation } from 'react-i18next';
 
 export default function ConfirmModal ({children, ...rest}) {
+    const { t } = useTranslation();
     const {
         title,
         confirmText,
@@ -13,11 +15,11 @@ export default function ConfirmModal ({children, ...rest}) {
 
     const parameters = {
         confirmButton: {
-            name: confirmButton ?? 'Отправить',
+            name: confirmButton ?? t('send'),
             variant: btnVariant ?? 'primary',
         },
         cancelButton: {
-            name: 'Отменить',
+            name: t('cancel'),
             variant: 'secondary',
         }
     };
