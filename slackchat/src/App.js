@@ -8,23 +8,36 @@ import PrivateRoutes from './utils/PrivateRoutes.jsx';
 import { AuthorizationContextProvider } from './context/AuthorizationContext.js';
 import NavigationBar from './components/NavigationBar.jsx';
 
+import { Provider, ErrorBoundary } from '@rollbar/react';
+import rollbarConfig from './configs/rollbar';
+
+function TestError() {
+  const a = null
+  return a.hello()
+}
+
 function App() {
   return (
-    <AuthorizationContextProvider>
-      <BrowserRouter>
-        <div className="d-flex flex-column vh-100">
-          <NavigationBar></NavigationBar>
-          <Routes>
-            <Route element={<PrivateRoutes/>}>
-              <Route element={<MainPage/>} path="/" exact/>
-            </Route>
-            <Route path="/login" element={<LoginPage/>}/>
-            <Route path="/signup" element={<RegisterPage/>}/>
-            <Route path="*" element={<NotFoundPage/>}/>
-          </Routes>
-        </div>
-      </BrowserRouter> 
-    </AuthorizationContextProvider>
+    <Provider config={rollbarConfig}>
+      <ErrorBoundary>
+        <TestError />
+        <AuthorizationContextProvider>
+          <BrowserRouter>
+            <div className="d-flex flex-column vh-100">
+              <NavigationBar></NavigationBar>
+              <Routes>
+                <Route element={<PrivateRoutes/>}>
+                  <Route element={<MainPage/>} path="/" exact/>
+                </Route>
+                <Route path="/login" element={<LoginPage/>}/>
+                <Route path="/signup" element={<RegisterPage/>}/>
+                <Route path="*" element={<NotFoundPage/>}/>
+              </Routes>
+            </div>
+          </BrowserRouter> 
+        </AuthorizationContextProvider>
+      </ErrorBoundary>
+    </Provider>
   );
 }
 
