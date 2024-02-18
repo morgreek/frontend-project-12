@@ -11,16 +11,11 @@ import NavigationBar from './components/NavigationBar.jsx';
 import { Provider, ErrorBoundary } from '@rollbar/react';
 import rollbarConfig from './configs/rollbar';
 
-function TestError() {
-  const a = null
-  return a.hello()
-}
 
 function App() {
   return (
     <Provider config={rollbarConfig}>
       <ErrorBoundary>
-        <TestError />
         <AuthorizationContextProvider>
           <BrowserRouter>
             <div className="d-flex flex-column vh-100">
