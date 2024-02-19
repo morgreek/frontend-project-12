@@ -13,8 +13,11 @@ start-backend:
 start-frontend:
 	make -C slackchat start
 
-start:
+start-deploy:
 	make start-backend & make start-frontend
+
+start:
+	npx start-server -s ./slackchat/build
 
 build:
 	npm run build
