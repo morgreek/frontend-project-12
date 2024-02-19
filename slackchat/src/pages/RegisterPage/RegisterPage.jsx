@@ -52,8 +52,11 @@ export default function RegisterPage() {
                 const response = await axios.post('/api/v1/signup', values);
                 setLogin(response.data);
                 setIsSubmitting(false)
+                console.log(`registration succesfull`)
+
                 navigateTo('/')
             } catch (e) {
+                console.log(`registration response error${e.response.status}`)
                 if (e.response.status === 409) {
                     setRegisterFailedError( t('validation.areUserExists'));
                 } else {
