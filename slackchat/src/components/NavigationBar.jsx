@@ -14,7 +14,7 @@ const NavigationBar = () => {
     <>
       <Navbar bg="white" expand="lg" className="shadow-sm">
         <Container>
-          <Navbar.Brand>{'Hexlet'}</Navbar.Brand>
+          <Navbar.Brand>{'Hexlet Chat'}</Navbar.Brand>
           {
             auth.userData
               ? <Button onClick={handleLogOut}>{t('logOut')}</Button>
