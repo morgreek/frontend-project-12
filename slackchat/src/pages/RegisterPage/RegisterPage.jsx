@@ -74,7 +74,7 @@ export default function RegisterPage() {
                     <Form onSubmit={formik.handleSubmit} className="p-3">
                         <h1 className="text-center mb-4">{ t('registration') }</h1>
                         <fieldset disabled={isSubmitting}>
-                            <Form.Group>
+                            <Form.Floating className="mb-3" controlid="floatingInput">
                                 <Form.Control
                                     onChange={formik.handleChange}
                                     onBlur={formik.handleBlur}
@@ -87,9 +87,10 @@ export default function RegisterPage() {
                                     required
                                     ref={ loginInput }
                                 />
+                                <Form.Label htmlFor="username">{ t('username') }</Form.Label>
                                 <Form.Control.Feedback type="invalid">{registerFailedError || (formik.touched.username && formik.errors.username)}</Form.Control.Feedback>
-                            </Form.Group>
-                            <Form.Group>
+                            </Form.Floating>
+                            <Form.Floating className="mb-3" controlid="floatingInput">
                                 <Form.Control
                                     type="password"
                                     onChange={ formik.handleChange }
@@ -102,9 +103,10 @@ export default function RegisterPage() {
                                     isInvalid={ formik.touched.password && formik.errors.password }
                                     required
                                 />
+                                <Form.Label htmlFor="password">{ t('password') }</Form.Label>
                                 <Form.Control.Feedback type="invalid">{ formik.touched.password && formik.errors.password }</Form.Control.Feedback>
-                            </Form.Group>
-                            <Form.Group>
+                            </Form.Floating>
+                            <Form.Floating className="mb-3" controlid="floatingInput">
                                 <Form.Control
                                     type="password"
                                     onChange={ formik.handleChange }
@@ -117,8 +119,9 @@ export default function RegisterPage() {
                                     isInvalid={ formik.touched.confirmPassword && formik.errors.confirmPassword }
                                     required
                                 />
+                                <Form.Label htmlFor="confirmPassword">{ t('confirmPassword') }</Form.Label>
                                 <Form.Control.Feedback type="invalid">{ formik.touched.confirmPassword && formik.errors.confirmPassword }</Form.Control.Feedback>
-                            </Form.Group>
+                            </Form.Floating>
                             <Button type="submit" variant="outline-primary" className="mt-2">{t('register')}</Button>
                         </fieldset>
                     </Form>
