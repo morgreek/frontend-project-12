@@ -48,7 +48,7 @@ export default function LoginPage() {
                 <Col sm={4}>
                     <Form onSubmit={formik.handleSubmit} className="p-3">
                         <h1 className="text-center mb-4">{ t('logIn') }</h1>
-                        <Form.Group>
+                        <Form.Floating className="mb-3" controlid="floatingInput">
                             <Form.Control
                                 onChange={formik.handleChange}
                                 value={formik.values.username}
@@ -60,8 +60,9 @@ export default function LoginPage() {
                                 required
                                 ref={ loginInput }
                             />
-                        </Form.Group>
-                        <Form.Group>
+                            <Form.Label htmlFor="username">{ t('usernick') }</Form.Label>
+                        </Form.Floating>
+                        <Form.Floating className="mb-3" controlid="floatingInput">
                             <Form.Control
                                 type="password"
                                 onChange={ formik.handleChange }
@@ -72,9 +73,10 @@ export default function LoginPage() {
                                 autoComplete="current-password"
                                 isInvalid={ !!loginFailedError }
                                 required
-                            />
+                                />
+                            <Form.Label htmlFor="password">{ t('password') }</Form.Label>
                             <Form.Control.Feedback type="invalid">{ loginFailedError }</Form.Control.Feedback>
-                        </Form.Group>
+                        </Form.Floating>
                         <Button type="submit" variant="outline-primary" className="mt-2">{ t('logIn') }</Button>
                         <div className="text-center">
                             <span>{ `${t('noAppAccount')} `}</span>
