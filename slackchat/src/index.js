@@ -10,7 +10,10 @@ import './i18next'
 import { ToastContainer } from 'react-toastify';
 import filter from 'leo-profanity';
 
-filter.loadDictionary('ru');
+filter.clearList()
+filter.add(filter.getDictionary('en'))
+filter.add(filter.getDictionary('fr'))
+filter.add(filter.getDictionary('ru'))
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
