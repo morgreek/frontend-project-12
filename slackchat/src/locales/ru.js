@@ -44,7 +44,7 @@ export default {
       },
 
       errors: {
-        authorization: 'Ошибка авторизации',
+        authorization: 'Неверные имя пользователя или пароль',
         connection: 'Ошибка соединения',
       }
     },
