@@ -86,9 +86,9 @@ export default function EditChannelModal ({children, ...rest}) {
                                     value={formik.values.channelName}
                                     onChange={formik.handleChange}
                                     isInvalid={formik.touched.channelName && formik.errors.channelName}
-                                    name="channelName"
+                                    name={t('channels.channelName')}
                                 />
-                                <Form.Label htmlFor='channelName' visuallyHidden>{ t('channels.channelName') }</Form.Label>
+                                <Form.Label htmlFor={t('channels.channelName')} visuallyHidden>{ t('channels.channelName') }</Form.Label>
                                 <Form.Control.Feedback type="invalid" className="position-absolute">
                                     {formik.errors.channelName}
                                 </Form.Control.Feedback>
