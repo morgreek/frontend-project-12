@@ -29,20 +29,19 @@ export default function EditChannelModal ({children, ...rest}) {
         }
     };
 
-    const inputRef = useRef();
+    const inputRef = useRef(null);
     useEffect(() => {
-        inputRef.current.focus();
-    });
-    useEffect(() => {
-        inputRef.current.select();
-    }, []);
+        if (inputRef.current) {
+          inputRef.current.select();
+        }
+      }, []);
 
     const channelsNames = channels
         .map((channel) => channel.name)
         .filter((name) => name !== channel?.name )
 
     const validationSchema = yup.object().shape({
-        channelName: yup.string()
+        name: yup.string()
             .trim()
             .min(3, 'От 3 до 20 символов')
             .max(20, 'От 3 до 20 символов')
@@ -53,7 +52,7 @@ export default function EditChannelModal ({children, ...rest}) {
 
     const formik = useFormik({
         initialValues: {
-            channelName: channel?.name ?? '',
+            name: channel?.name ?? '',
             channels: channelsNames,
         },
 
@@ -61,10 +60,10 @@ export default function EditChannelModal ({children, ...rest}) {
 
         onSubmit: (values) => {
             if (channel) {
-                confirmAction(channel.id, filter.clean(values.channelName));
+                confirmAction(channel.id, filter.clean(values.name));
             }
             if (!channel) {
-                confirmAction(filter.clean(values.channelName));
+                confirmAction(filter.clean(values.name));
             }
             onHide();
         }
@@ -83,15 +82,14 @@ export default function EditChannelModal ({children, ...rest}) {
                                 <Form.Control
                                     type="text"
                                     ref={inputRef}
-                                    value={formik.values.channelName}
+                                    value={formik.values.name}
                                     onChange={formik.handleChange}
-                                    isInvalid={formik.touched.channelName && formik.errors.channelName}
-                                    name='channelName'
+                                    isInvalid={formik.touched.name && formik.errors.name}
+                                    name="name"
+                                    id="name"
                                 />
-                                <Form.Label htmlFor='channelName' visuallyHidden>{ t('channels.channelName') }</Form.Label>
-                                <Form.Control.Feedback type="invalid" className="position-absolute">
-                                    {formik.errors.channelName}
-                                </Form.Control.Feedback>
+                                <Form.Label visuallyHidden htmlFor="name">{ t('channels.channelName') }</Form.Label>
+                                <Form.Control.Feedback type="invalid">{formik.errors.name}</Form.Control.Feedback>
                             </Form.Group>
                         </Stack>
                         <Modal.Footer>
