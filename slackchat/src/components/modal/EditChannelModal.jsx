@@ -89,7 +89,7 @@ export default function EditChannelModal ({children, ...rest}) {
                                     name="name"
                                     id='name'
                                 />
-                                <Form.Label htmlFor='name' visuallyHidden>{ t('channels.channelName') }</Form.Label>
+                                <Form.Label visuallyHidden>{ t('channels.channelName') }</Form.Label>
                                 <Form.Control.Feedback type="invalid" className="position-absolute">
                                     {formik.errors.channelName}
                                 </Form.Control.Feedback>
