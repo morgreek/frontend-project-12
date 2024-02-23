@@ -24,7 +24,7 @@ const renderEditableChannel = (parameters) => {
           {renderChannelButton({id, name, variant, selectChannel})}
 
           <Dropdown.Toggle split variant={variant ? variant : null} className="flex-grow-0" id="dropdown-split-basic">
-            <span className="visually-hidden">{'Test'}</span>
+            <span className="visually-hidden">{ t('channels.channelManage') }</span>
           </Dropdown.Toggle>
 
           <Dropdown.Menu>

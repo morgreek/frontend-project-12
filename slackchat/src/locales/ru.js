@@ -26,7 +26,9 @@ export default {
       },
 
       channels: {
+        channelName: 'Имя канала',
         channelsTitle: 'Каналы',
+        channelManage: 'Управление каналом',
         addChannel: 'Добавить канал',
         renameChannel: 'Переименовать канал',
         removeChannel: 'Удалить канал',
