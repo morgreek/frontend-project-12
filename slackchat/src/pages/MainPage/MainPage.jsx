@@ -24,12 +24,14 @@ export default function MainPage() {
   const [modalState, setModalState] = useState({});
   const channels = useSelector(channelsSelectors.selectAll);
   const [currentChannelId, setCurrentChannelId] = useState(1);
+  const [changeChannel, setChangeChannel] = useState(false)
   const currentChannel = useSelector((state) => {
     return channelsSelectors.selectById(state, currentChannelId);
   });
   const channelMessages = useSelector(messagesSelectors.selectAll).filter(({ channelId }) => channelId === currentChannelId);
 
   const addChannel = (name) => {
+    setChangeChannel((prev) => true);
     socket.emit('newChannel', { name });
   }
 
@@ -71,20 +73,28 @@ export default function MainPage() {
     socket.on('newMessage', (message) => {
       dispatch(messagesActions.addMessage(message));
     });
-    socket.on('newChannel', (id) => {
-      dispatch(channelsActions.addChannel(id));
+    socket.on('newChannel', (channel) => {
+      dispatch(channelsActions.addChannel(channel));
+      if (changeChannel) {
+        setCurrentChannelId(channel.id)
+        setChangeChannel((prev) => false);
+      }
       toast.info(t('channels.channelAdded'));
     });
     socket.on('removeChannel', ({id}) => {
-      dispatch(channelsActions.removeChannel(id));
-      toast.info(t('channels.channelRemoved'));
+      if (id === currentChannelId) {
+        setCurrentChannelId(1)
+      } else {
+        dispatch(channelsActions.removeChannel(id));
+        toast.info(t('channels.channelRemoved'));
+      }
     });
     socket.on('renameChannel', ({id, name}) => {
       dispatch(channelsActions.updateChannel({id, changes:{ name }}));
       toast.info(t('channels.channelRenamed'));
     });
     
-  }, [auth.userData, dispatch, currentChannelId]);
+  }, [auth.userData, dispatch, currentChannelId, changeChannel]);
 
   const renderModal = (parameters) => {
     const {
