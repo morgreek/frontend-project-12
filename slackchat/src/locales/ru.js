@@ -1,4 +1,4 @@
-export default {
+const translations = {
     translation: {
       logIn: 'Войти',
       logOut: 'Выйти',
@@ -51,3 +51,5 @@ export default {
       }
     },
   };
+
+export default translations;

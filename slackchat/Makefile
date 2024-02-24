@@ -6,3 +6,6 @@ start:
 
 build:
 	npm build
+
+lint-fix:
+	npx eslint . --fix

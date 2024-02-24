@@ -16,6 +16,9 @@ start-frontend:
 start-deploy:
 	make start-backend & make start-frontend
 
+lint-slack:
+	make -C slackchat lint-fix
+
 start:
 	npx start-server -s ./slackchat/build
 
