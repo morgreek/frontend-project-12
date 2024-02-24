@@ -1,4 +1,4 @@
-import { Button } from "react-bootstrap";
+import { Button } from 'react-bootstrap';
 
 export default function ConfirmButtons({ onHide, parameters }) {
   const { confirmButton } = parameters;

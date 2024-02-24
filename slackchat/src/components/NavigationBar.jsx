@@ -1,7 +1,7 @@
-import { Button, Container, Navbar } from "react-bootstrap";
-import { useTranslation } from "react-i18next";
+import { Button, Container, Navbar } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 
-import { useAuthorizationContext } from "../hooks/useAuthorizationContext";
+import { useAuthorizationContext } from '../hooks/useAuthorizationContext';
 
 const NavigationBar = () => {
   const auth = useAuthorizationContext();
@@ -17,7 +17,7 @@ const NavigationBar = () => {
         <Navbar.Brand>Hexlet Chat</Navbar.Brand>
         {
           auth.userData
-            ? <Button onClick={handleLogOut}>{t("logOut")}</Button>
+            ? <Button onClick={handleLogOut}>{t('logOut')}</Button>
             : null
         }
 

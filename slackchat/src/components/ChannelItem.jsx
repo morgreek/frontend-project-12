@@ -1,5 +1,5 @@
-import { Button, ButtonGroup, Dropdown } from "react-bootstrap";
-import { useTranslation } from "react-i18next";
+import { Button, ButtonGroup, Dropdown } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 
 const renderChannelButton = (parameters) => {
   const {
@@ -30,12 +30,12 @@ const renderEditableChannel = (parameters) => {
       })}
 
       <Dropdown.Toggle className="flex-grow-0" id="dropdown-split-basic" split variant={variant || null}>
-        <span className="visually-hidden">{ t("channels.channelManage") }</span>
+        <span className="visually-hidden">{ t('channels.channelManage') }</span>
       </Dropdown.Toggle>
 
       <Dropdown.Menu>
-        <Dropdown.Item onClick={() => onRemoveChannel(id)}>{ t("remove") }</Dropdown.Item>
-        <Dropdown.Item onClick={() => onRenameChannel(id)}>{ t("rename") }</Dropdown.Item>
+        <Dropdown.Item onClick={() => onRemoveChannel(id)}>{ t('remove') }</Dropdown.Item>
+        <Dropdown.Item onClick={() => onRenameChannel(id)}>{ t('rename') }</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
   );
@@ -46,7 +46,7 @@ export default function ChannelItem(props) {
     channel, currentChannel, onRemoveChannel, onRenameChannel, selectChannel,
   } = props;
   const { id, name, removable } = channel;
-  const variant = id === currentChannel.id ? "secondary" : null;
+  const variant = id === currentChannel.id ? 'secondary' : null;
 
   const { t } = useTranslation();
 

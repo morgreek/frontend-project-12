@@ -1,6 +1,6 @@
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet } from 'react-router-dom';
 
-import { useAuthorizationContext } from "../hooks/useAuthorizationContext.js";
+import { useAuthorizationContext } from '../hooks/useAuthorizationContext.js';
 
 const PrivateRoutes = () => {
   const { userData } = useAuthorizationContext();

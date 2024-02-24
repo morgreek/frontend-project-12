@@ -1,5 +1,5 @@
-import ConfirmModal from "./ConfirmModal";
-import EditChannelModal from "./EditChannelModal";
+import ConfirmModal from './ConfirmModal';
+import EditChannelModal from './EditChannelModal';
 
 const modals = {
   addChannel: EditChannelModal,

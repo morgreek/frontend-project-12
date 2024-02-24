@@ -1,42 +1,42 @@
-import axios from "axios";
-import { useFormik } from "formik";
-import { useRef, useState } from "react";
+import axios from 'axios';
+import { useFormik } from 'formik';
+import { useRef, useState } from 'react';
 import {
   Button, Col, Container, Form, Row,
-} from "react-bootstrap";
-import { useTranslation } from "react-i18next";
-import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+} from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
-import { useAuthorizationContext } from "../../hooks/useAuthorizationContext.js";
+import { useAuthorizationContext } from '../../hooks/useAuthorizationContext.js';
 
 export default function LoginPage() {
   const { setLogin } = useAuthorizationContext();
   const loginInput = useRef();
-  const [loginFailedError, setLoginFailedError] = useState("");
+  const [loginFailedError, setLoginFailedError] = useState('');
   const navigateTo = useNavigate();
 
   const { t } = useTranslation();
 
   const formik = useFormik({
     initialValues: {
-      password: "",
-      username: "",
+      password: '',
+      username: '',
     },
 
     onSubmit: async (values) => {
       try {
-        const response = await axios.post("/api/v1/login", values);
+        const response = await axios.post('/api/v1/login', values);
         setLogin(response.data);
-        localStorage.setItem("user", JSON.stringify(response.data));
+        localStorage.setItem('user', JSON.stringify(response.data));
         // сервер отвечает: reply.send({ token, username });
-        navigateTo("/");
+        navigateTo('/');
       } catch (e) {
         if (e.response.status === 401) {
-          setLoginFailedError(t("errors.authorization"));
+          setLoginFailedError(t('errors.authorization'));
         } else {
-          setLoginFailedError("");
-          toast.error(t("errors.connection"));
+          setLoginFailedError('');
+          toast.error(t('errors.connection'));
         }
         loginInput.current.reset();
       }
@@ -48,7 +48,7 @@ export default function LoginPage() {
       <Row className="justify-content-center align-content-center h-100">
         <Col sm={4}>
           <Form className="p-3" onSubmit={formik.handleSubmit}>
-            <h1 className="text-center mb-4">{ t("logIn") }</h1>
+            <h1 className="text-center mb-4">{ t('logIn') }</h1>
             <Form.Floating className="mb-3" controlid="floatingInput">
               <Form.Control
                 autoComplete="username"
@@ -56,12 +56,12 @@ export default function LoginPage() {
                 isInvalid={!!loginFailedError}
                 name="username"
                 onChange={formik.handleChange}
-                placeholder={t("usernick")}
+                placeholder={t('usernick')}
                 ref={loginInput}
                 required
                 value={formik.values.username}
               />
-              <Form.Label htmlFor="username">{ t("usernick") }</Form.Label>
+              <Form.Label htmlFor="username">{ t('usernick') }</Form.Label>
             </Form.Floating>
             <Form.Floating className="mb-3" controlid="floatingInput">
               <Form.Control
@@ -70,18 +70,18 @@ export default function LoginPage() {
                 isInvalid={!!loginFailedError}
                 name="password"
                 onChange={formik.handleChange}
-                placeholder={t("password")}
+                placeholder={t('password')}
                 required
                 type="password"
                 value={formik.values.password}
               />
-              <Form.Label htmlFor="password">{ t("password") }</Form.Label>
+              <Form.Label htmlFor="password">{ t('password') }</Form.Label>
               <Form.Control.Feedback type="invalid">{ loginFailedError }</Form.Control.Feedback>
             </Form.Floating>
-            <Button className="mt-2" type="submit" variant="outline-primary">{ t("logIn") }</Button>
+            <Button className="mt-2" type="submit" variant="outline-primary">{ t('logIn') }</Button>
             <div className="text-center">
-              <span>{ `${t("noAppAccount")} `}</span>
-              <Link to="/signup">{ t("registration") }</Link>
+              <span>{ `${t('noAppAccount')} `}</span>
+              <Link to="/signup">{ t('registration') }</Link>
             </div>
           </Form>
         </Col>

@@ -1,11 +1,11 @@
-import { useFormik } from "formik";
-import filter from "leo-profanity";
-import { useEffect, useRef } from "react";
-import { Form, Modal, Stack } from "react-bootstrap";
-import { useTranslation } from "react-i18next";
-import * as yup from "yup";
+import { useFormik } from 'formik';
+import filter from 'leo-profanity';
+import { useEffect, useRef } from 'react';
+import { Form, Modal, Stack } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
+import * as yup from 'yup';
 
-import ConfirmButtons from "./ConfirmButtons";
+import ConfirmButtons from './ConfirmButtons';
 
 export default function EditChannelModal({ children, ...rest }) {
   const { t } = useTranslation();
@@ -21,12 +21,12 @@ export default function EditChannelModal({ children, ...rest }) {
 
   const parameters = {
     cancelButton: {
-      name: t("cancel"),
-      variant: "secondary",
+      name: t('cancel'),
+      variant: 'secondary',
     },
     confirmButton: {
-      name: confirmButton ?? t("send"),
-      variant: btnVariant ?? "primary",
+      name: confirmButton ?? t('send'),
+      variant: btnVariant ?? 'primary',
     },
   };
 
@@ -45,16 +45,16 @@ export default function EditChannelModal({ children, ...rest }) {
     channelNames: yup.array(),
     name: yup.string()
       .trim()
-      .min(3, "От 3 до 20 символов")
-      .max(20, "От 3 до 20 символов")
-      .required("Обязательное поле")
-      .notOneOf(channelsNames, "Должно быть уникальным"),
+      .min(3, 'От 3 до 20 символов')
+      .max(20, 'От 3 до 20 символов')
+      .required('Обязательное поле')
+      .notOneOf(channelsNames, 'Должно быть уникальным'),
   });
 
   const formik = useFormik({
     initialValues: {
       channels: channelsNames,
-      name: channel?.name ?? "",
+      name: channel?.name ?? '',
     },
 
     onSubmit: (values) => {
@@ -89,7 +89,7 @@ export default function EditChannelModal({ children, ...rest }) {
                   type="text"
                   value={formik.values.name}
                 />
-                <Form.Label htmlFor="name" visuallyHidden>{ t("channels.channelName") }</Form.Label>
+                <Form.Label htmlFor="name" visuallyHidden>{ t('channels.channelName') }</Form.Label>
                 <Form.Control.Feedback type="invalid">{formik.errors.name}</Form.Control.Feedback>
               </Form.Group>
             </Stack>

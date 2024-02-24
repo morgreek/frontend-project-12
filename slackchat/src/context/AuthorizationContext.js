@@ -1,10 +1,10 @@
-import { createContext, useState } from "react";
+import { createContext, useState } from 'react';
 
 const AuthorizationContext = createContext({});
 
 const AuthorizationContextProvider = ({ children }) => {
   const [userData, setLogin] = useState(() => {
-    const userLocal = localStorage.getItem("user");
+    const userLocal = localStorage.getItem('user');
     return userLocal ? JSON.parse(userLocal) : null;
   });
 

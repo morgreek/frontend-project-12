@@ -1,17 +1,17 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { Container, Row } from "react-bootstrap";
-import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
-import { io } from "socket.io-client";
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { Container, Row } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import { io } from 'socket.io-client';
 
-import ChannelList from "../../components/ChannelList";
-import ChatWindow from "../../components/chatWindow";
-import getModalComponent from "../../components/modal/index";
-import { useAuthorizationContext } from "../../hooks/useAuthorizationContext";
-import { actions as channelsActions, selectors as channelsSelectors } from "../../slices/channelsSlice.js";
-import { actions as messagesActions, selectors as messagesSelectors } from "../../slices/messagesSlice.js";
+import ChannelList from '../../components/ChannelList';
+import ChatWindow from '../../components/chatWindow';
+import getModalComponent from '../../components/modal/index';
+import { useAuthorizationContext } from '../../hooks/useAuthorizationContext';
+import { actions as channelsActions, selectors as channelsSelectors } from '../../slices/channelsSlice.js';
+import { actions as messagesActions, selectors as messagesSelectors } from '../../slices/messagesSlice.js';
 
 const socket = io();
 
@@ -30,15 +30,15 @@ export default function MainPage() {
 
   const addChannel = (name) => {
     setChangeChannel(true);
-    socket.emit("newChannel", { name });
+    socket.emit('newChannel', { name });
   };
 
   const renameChannel = (id, name) => {
-    socket.emit("renameChannel", { id, name });
+    socket.emit('renameChannel', { id, name });
   };
 
   const removeChannel = (id) => {
-    socket.emit("removeChannel", { id });
+    socket.emit('removeChannel', { id });
     if (currentChannelId === id) {
       setCurrentChannelId(1);
     }
@@ -46,7 +46,7 @@ export default function MainPage() {
 
   const submitMessage = (message) => {
     socket.emit(
-      "newMessage",
+      'newMessage',
       { body: message, channelId: currentChannelId, username: auth.userData.username },
     );
   };
@@ -57,7 +57,7 @@ export default function MainPage() {
 
   useEffect(() => {
     const getData = async () => {
-      const { data } = await axios.get("/api/v1/data", { headers: getHeaderRequest() });
+      const { data } = await axios.get('/api/v1/data', { headers: getHeaderRequest() });
       dispatch(channelsActions.addChannels(data.channels));
       dispatch(messagesActions.addMessages(data.messages));
     };
@@ -66,28 +66,28 @@ export default function MainPage() {
 
     socket.removeAllListeners();
     socket.connect();
-    socket.on("newMessage", (message) => {
+    socket.on('newMessage', (message) => {
       dispatch(messagesActions.addMessage(message));
     });
-    socket.on("newChannel", (channel) => {
+    socket.on('newChannel', (channel) => {
       dispatch(channelsActions.addChannel(channel));
       if (changeChannel) {
         setCurrentChannelId(channel.id);
         setChangeChannel(false);
       }
-      toast.info(t("channels.channelAdded"));
+      toast.info(t('channels.channelAdded'));
     });
-    socket.on("removeChannel", ({ id }) => {
+    socket.on('removeChannel', ({ id }) => {
       if (id === currentChannelId) {
         setCurrentChannelId(1);
       } else {
         dispatch(channelsActions.removeChannel(id));
-        toast.info(t("channels.channelRemoved"));
+        toast.info(t('channels.channelRemoved'));
       }
     });
-    socket.on("renameChannel", ({ id, name }) => {
+    socket.on('renameChannel', ({ id, name }) => {
       dispatch(channelsActions.updateChannel({ changes: { name }, id }));
-      toast.info(t("channels.channelRenamed"));
+      toast.info(t('channels.channelRenamed'));
     });
   }, [auth.userData, dispatch, currentChannelId, changeChannel]);
 

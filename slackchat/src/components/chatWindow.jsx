@@ -1,8 +1,8 @@
-import Col from "react-bootstrap/Col";
+import Col from 'react-bootstrap/Col';
 
-import MessagesBox from "./MessageBox";
-import MessageSendField from "./MessageSendField";
-import ChannelHeader from "./channelHeader";
+import MessagesBox from './MessageBox';
+import MessageSendField from './MessageSendField';
+import ChannelHeader from './channelHeader';
 
 export default function ChatWindow({ channel, messages, submitMessage }) {
   return (
