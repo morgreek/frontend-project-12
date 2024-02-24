@@ -5,7 +5,7 @@ const renderChannelButton = (parameters) => {
     const {id, name, variant, selectChannel} = parameters;
     return (
         <Button
-            className={`w-100 rounded-0 text-start btn text-truncate`}
+            className={`w-100 rounded-0 text-start text-truncate`}
             variant={variant ? variant : null}
             type="button"
             onClick={() => selectChannel(id)}
