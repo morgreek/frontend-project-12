@@ -1,18 +1,18 @@
-import { createContext, useState } from 'react';
+import { createContext, useState } from "react";
 
 const AuthorizationContext = createContext({});
 
 const AuthorizationContextProvider = ({ children }) => {
-    const [userData, setLogin] = useState(() => {
-        const userLocal = localStorage.getItem('user');
-        return userLocal ? JSON.parse(userLocal) : null;
-    });
+  const [userData, setLogin] = useState(() => {
+    const userLocal = localStorage.getItem("user");
+    return userLocal ? JSON.parse(userLocal) : null;
+  });
 
-    return (
-        <AuthorizationContext.Provider value={{userData, setLogin}}>
-            { children }
-        </AuthorizationContext.Provider>
-    )
-}
+  return (
+    <AuthorizationContext.Provider value={{ setLogin, userData }}>
+      { children }
+    </AuthorizationContext.Provider>
+  );
+};
 
 export { AuthorizationContext, AuthorizationContextProvider };

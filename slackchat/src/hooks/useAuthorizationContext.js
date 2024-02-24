@@ -1,6 +1,7 @@
-import { useContext } from 'react';
-import { AuthorizationContext } from '../context/AuthorizationContext.js';
+import { useContext } from "react";
 
-const  useAuthorizationContext = () => useContext(AuthorizationContext);
+import { AuthorizationContext } from "../context/AuthorizationContext.js";
+
+const useAuthorizationContext = () => useContext(AuthorizationContext);
 
 export { useAuthorizationContext };

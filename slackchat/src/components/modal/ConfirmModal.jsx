@@ -1,50 +1,51 @@
-import { Form, Modal } from 'react-bootstrap';
-import ConfirmButtons from './ConfirmButtons';
-import { useTranslation } from 'react-i18next';
+import { Form, Modal } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
 
-export default function ConfirmModal ({children, ...rest}) {
-    const { t } = useTranslation();
-    const {
-        title,
-        confirmText,
-        confirmButton,
-        btnVariant,
-        onHide,
-        confirmAction,
-    } = rest;
+import ConfirmButtons from "./ConfirmButtons";
 
-    const parameters = {
-        confirmButton: {
-            name: confirmButton ?? t('send'),
-            variant: btnVariant ?? 'primary',
-        },
-        cancelButton: {
-            name: t('cancel'),
-            variant: 'secondary',
-        }
-    };
+export default function ConfirmModal({ children, ...rest }) {
+  const { t } = useTranslation();
+  const {
+    btnVariant,
+    confirmAction,
+    confirmButton,
+    confirmText,
+    onHide,
+    title,
+  } = rest;
 
-    const sumbitHandler = (e) => {
-        e.preventDefault();
-        confirmAction()
-        onHide();
-    }
+  const parameters = {
+    cancelButton: {
+      name: t("cancel"),
+      variant: "secondary",
+    },
+    confirmButton: {
+      name: confirmButton ?? t("send"),
+      variant: btnVariant ?? "primary",
+    },
+  };
 
-    return (
-        <Modal show onHide={onHide} centered keyboard>
-            <Modal.Header closeButton>
-                <Modal.Title>{title}</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                <Form onSubmit={sumbitHandler}>
-                    <fieldset>
-                        <p className="lead">{confirmText}</p>
-                        <Modal.Footer>
-                            <ConfirmButtons parameters={parameters} onHide={onHide}/>
-                        </Modal.Footer>
-                    </fieldset>
-                </Form>
-            </Modal.Body>
-        </Modal>
-    );
+  const sumbitHandler = (e) => {
+    e.preventDefault();
+    confirmAction();
+    onHide();
+  };
+
+  return (
+    <Modal centered keyboard onHide={onHide} show>
+      <Modal.Header closeButton>
+        <Modal.Title>{title}</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Form onSubmit={sumbitHandler}>
+          <fieldset>
+            <p className="lead">{confirmText}</p>
+            <Modal.Footer>
+              <ConfirmButtons onHide={onHide} parameters={parameters} />
+            </Modal.Footer>
+          </fieldset>
+        </Form>
+      </Modal.Body>
+    </Modal>
+  );
 }

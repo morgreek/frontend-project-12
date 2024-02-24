@@ -1,5 +1,5 @@
-import ru from './ru.js';
+import ru from "./ru.js";
 
-const languages = { ru }
+const languages = { ru };
 
 export default languages;

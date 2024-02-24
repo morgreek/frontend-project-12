@@ -1,30 +1,28 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from "react";
 
-export default function MessagesBox({messages}) {
-    const messagesRef = useRef();
-    useEffect(() => {
-        const { current } = messagesRef;
- 
-        if (!current) return;
- 
-        const { scrollHeight, clientHeight } = current;
-        if (scrollHeight > clientHeight) {
-            current.scrollTop = scrollHeight - clientHeight;
-        }
-    }, [messages.length]);
+export default function MessagesBox({ messages }) {
+  const messagesRef = useRef();
+  useEffect(() => {
+    const { current } = messagesRef;
 
-    const mapMessages = ({ id, body, username }) => {
-        return (
-            <div id={id}  className="text-break mb-2">
-                <b>{`${username}: `}</b>
-                {body}
-            </div>
-        );
+    if (!current) return;
+
+    const { clientHeight, scrollHeight } = current;
+    if (scrollHeight > clientHeight) {
+      current.scrollTop = scrollHeight - clientHeight;
     }
+  }, [messages.length]);
 
-    return (
-        <div id="messages-box" ref={messagesRef} className="chat-messages overflow-auto px-5 ">
-            {messages.map(mapMessages)}
-        </div>
-    );
+  const mapMessages = ({ body, id, username }) => (
+    <div className="text-break mb-2" id={id}>
+      <b>{`${username}: `}</b>
+      {body}
+    </div>
+  );
+
+  return (
+    <div className="chat-messages overflow-auto px-5 " id="messages-box" ref={messagesRef}>
+      {messages.map(mapMessages)}
+    </div>
+  );
 }
