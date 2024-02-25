@@ -1,6 +1,6 @@
 import { Button } from 'react-bootstrap';
 
-export default function ConfirmButtons({ onHide, parameters }) {
+const ConfirmButtons = ({ onHide, parameters }) => {
   const { confirmButton } = parameters;
   const { cancelButton } = parameters;
   return (
@@ -9,4 +9,6 @@ export default function ConfirmButtons({ onHide, parameters }) {
       <Button type="submit" variant={confirmButton.variant}>{confirmButton.name}</Button>
     </div>
   );
-}
+};
+
+export default ConfirmButtons;

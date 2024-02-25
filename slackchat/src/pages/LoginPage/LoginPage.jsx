@@ -8,9 +8,9 @@ import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-import { useAuthorizationContext } from '../../hooks/useAuthorizationContext.js';
+import useAuthorizationContext from '../../hooks/useAuthorizationContext.js';
 
-export default function LoginPage() {
+const LoginPage = () => {
   const { setLogin } = useAuthorizationContext();
   const loginInput = useRef();
   const [loginFailedError, setLoginFailedError] = useState('');
@@ -88,4 +88,6 @@ export default function LoginPage() {
       </Row>
     </Container>
   );
-}
+};
+
+export default LoginPage;

@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react';
+import { createContext, useMemo, useState } from 'react';
 
 const AuthorizationContext = createContext({});
 
@@ -8,8 +8,10 @@ const AuthorizationContextProvider = ({ children }) => {
     return userLocal ? JSON.parse(userLocal) : null;
   });
 
+  const authState = useMemo(() => ({ setLogin, userData }), userData);
+
   return (
-    <AuthorizationContext.Provider value={{ setLogin, userData }}>
+    <AuthorizationContext.Provider value={authState}>
       { children }
     </AuthorizationContext.Provider>
   );

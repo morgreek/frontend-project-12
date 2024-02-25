@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import ConfirmButtons from './ConfirmButtons';
 
-export default function ConfirmModal({ children, ...rest }) {
+const ConfirmModal = ({ children, ...rest }) => {
   const { t } = useTranslation();
   const {
     btnVariant,
@@ -48,4 +48,6 @@ export default function ConfirmModal({ children, ...rest }) {
       </Modal.Body>
     </Modal>
   );
-}
+};
+
+export default ConfirmModal;

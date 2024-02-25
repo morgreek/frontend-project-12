@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import ChannelItem from './ChannelItem';
 
-export default function ChannelList(props) {
+const ChannelList = (props) => {
   const { t } = useTranslation();
 
   const {
@@ -84,4 +84,6 @@ export default function ChannelList(props) {
       {renderChannels(channels, channel)}
     </Col>
   );
-}
+};
+
+export default ChannelList;

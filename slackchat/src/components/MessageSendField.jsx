@@ -2,7 +2,7 @@ import filter from 'leo-profanity';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-export default function MessageSendField({ submitMessage }) {
+const MessageSendField = ({ submitMessage }) => {
   const { t } = useTranslation();
 
   const [message, setMessage] = useState('');
@@ -37,4 +37,6 @@ export default function MessageSendField({ submitMessage }) {
       </form>
     </div>
   );
-}
+};
+
+export default MessageSendField;

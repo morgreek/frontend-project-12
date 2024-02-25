@@ -7,7 +7,7 @@ import * as yup from 'yup';
 
 import ConfirmButtons from './ConfirmButtons';
 
-export default function EditChannelModal({ children, ...rest }) {
+const EditChannelModal = ({ children, ...rest }) => {
   const { t } = useTranslation();
   const {
     btnVariant,
@@ -101,4 +101,6 @@ export default function EditChannelModal({ children, ...rest }) {
       </Modal.Body>
     </Modal>
   );
-}
+};
+
+export default EditChannelModal;

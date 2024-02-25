@@ -41,7 +41,7 @@ const renderEditableChannel = (parameters) => {
   );
 };
 
-export default function ChannelItem(props) {
+const ChannelItem = (props) => {
   const {
     channel, currentChannel, onRemoveChannel, onRenameChannel, selectChannel,
   } = props;
@@ -63,4 +63,6 @@ export default function ChannelItem(props) {
       }
     </li>
   );
-}
+};
+
+export default ChannelItem;

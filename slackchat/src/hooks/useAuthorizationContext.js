@@ -4,4 +4,4 @@ import { AuthorizationContext } from '../context/AuthorizationContext.js';
 
 const useAuthorizationContext = () => useContext(AuthorizationContext);
 
-export { useAuthorizationContext };
+export default useAuthorizationContext;

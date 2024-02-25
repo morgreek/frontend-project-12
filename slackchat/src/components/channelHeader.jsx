@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 
-export default function ChannelHeader({ channel, messages }) {
+const ChannelHeader = ({ channel, messages }) => {
   const { t } = useTranslation();
 
   return (
@@ -9,4 +9,6 @@ export default function ChannelHeader({ channel, messages }) {
       <span className="text-muted">{t('messages.messages', { count: messages.length })}</span>
     </div>
   );
-}
+};
+
+export default ChannelHeader;

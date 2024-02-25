@@ -9,9 +9,9 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import * as yup from 'yup';
 
-import { useAuthorizationContext } from '../../hooks/useAuthorizationContext.js';
+import useAuthorizationContext from '../../hooks/useAuthorizationContext.js';
 
-export default function RegisterPage() {
+const RegisterPage = () => {
   const { setLogin } = useAuthorizationContext();
   const navigateTo = useNavigate();
   const [registerFailedError, setRegisterFailedError] = useState('');
@@ -135,4 +135,6 @@ export default function RegisterPage() {
       </Row>
     </Container>
   );
-}
+};
+
+export default RegisterPage;

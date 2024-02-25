@@ -9,13 +9,13 @@ import { io } from 'socket.io-client';
 import ChannelList from '../../components/ChannelList';
 import ChatWindow from '../../components/chatWindow';
 import getModalComponent from '../../components/modal/index';
-import { useAuthorizationContext } from '../../hooks/useAuthorizationContext';
+import useAuthorizationContext from '../../hooks/useAuthorizationContext';
 import { actions as channelsActions, selectors as channelsSelectors } from '../../slices/channelsSlice.js';
 import { actions as messagesActions, selectors as messagesSelectors } from '../../slices/messagesSlice.js';
 
 const socket = io();
 
-export default function MainPage() {
+const MainPage = () => {
   const { t } = useTranslation();
   const auth = useAuthorizationContext();
   const dispatch = useDispatch();
@@ -89,13 +89,13 @@ export default function MainPage() {
       dispatch(channelsActions.updateChannel({ changes: { name }, id }));
       toast.info(t('channels.channelRenamed'));
     });
-  }, [auth.userData, dispatch, currentChannelId, changeChannel]);
+  }, [auth.userData, dispatch, currentChannelId, changeChannel, getHeaderRequest, t]);
 
   const renderModal = (parameters) => {
     const {
       btnVariant,
       channel,
-      channels,
+      channels: channelsList,
       confirmAction,
       confirmButton,
       confirmText,
@@ -109,7 +109,7 @@ export default function MainPage() {
       <ModalComponent
         btnVariant={btnVariant}
         channel={channel}
-        channels={channels}
+        channels={channelsList}
         confirmAction={confirmAction}
         confirmButton={confirmButton}
         confirmText={confirmText}
@@ -140,4 +140,6 @@ export default function MainPage() {
       {renderModal(modalState)}
     </Container>
   );
-}
+};
+
+export default MainPage;

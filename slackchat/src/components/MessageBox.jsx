@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-export default function MessagesBox({ messages }) {
+const MessagesBox = ({ messages }) => {
   const messagesRef = useRef();
   useEffect(() => {
     const { current } = messagesRef;
@@ -25,4 +25,6 @@ export default function MessagesBox({ messages }) {
       {messages.map(mapMessages)}
     </div>
   );
-}
+};
+
+export default MessagesBox;
