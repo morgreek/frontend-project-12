@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { io } from 'socket.io-client';
 
+import apiRoutes from '../../api/api';
 import ChannelList from '../../components/ChannelList';
 import ChatWindow from '../../components/chatWindow';
 import getModalComponent from '../../components/modal/index';
@@ -57,7 +58,7 @@ const MainPage = () => {
 
   useEffect(() => {
     const getData = async () => {
-      const { data } = await axios.get('/api/v1/data', { headers: getHeaderRequest() });
+      const { data } = await axios.get(apiRoutes.data, { headers: getHeaderRequest() });
       dispatch(channelsActions.addChannels(data.channels));
       dispatch(messagesActions.addMessages(data.messages));
     };

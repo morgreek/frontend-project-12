@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import * as yup from 'yup';
 
+import apiRoutes from '../../api/api';
 import useAuthorizationContext from '../../hooks/useAuthorizationContext.js';
 
 const RegisterPage = () => {
@@ -50,7 +51,7 @@ const RegisterPage = () => {
     onSubmit: async (values) => {
       try {
         setIsSubmitting(true);
-        const response = await axios.post('/api/v1/signup', values);
+        const response = await axios.post(apiRoutes.signup, values);
         setLogin(response.data);
         setIsSubmitting(false);
         console.log('registration succesfull');

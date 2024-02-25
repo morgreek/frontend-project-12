@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
+import apiRoutes from '../../api/api';
 import useAuthorizationContext from '../../hooks/useAuthorizationContext.js';
 
 const LoginPage = () => {
@@ -26,7 +27,7 @@ const LoginPage = () => {
 
     onSubmit: async (values) => {
       try {
-        const response = await axios.post('/api/v1/login', values);
+        const response = await axios.post(apiRoutes.login, values);
         setLogin(response.data);
         localStorage.setItem('user', JSON.stringify(response.data));
         // сервер отвечает: reply.send({ token, username });
