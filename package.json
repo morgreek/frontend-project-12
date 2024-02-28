@@ -1,7 +1,7 @@
 {
   "name": "@hexlet/code",
   "version": "1.0.0",
-  "description": "Four Hexlet project",
+  "description": "Simple chat like a Slack based on React and Hexlet chat-server",
   "main": "index.js",
   "scripts": {
     "build": "npm run build --prefix slackchat",

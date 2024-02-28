@@ -9,8 +9,8 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import * as yup from 'yup';
 
-import apiRoutes from '../../api/api';
-import useAuthorizationContext from '../../hooks/useAuthorizationContext.js';
+import apiRoutes from '../api/api';
+import useAuthorizationContext from '../hooks/useAuthorizationContext.js';
 
 const RegisterPage = () => {
   const { setLogin } = useAuthorizationContext();
@@ -26,15 +26,18 @@ const RegisterPage = () => {
   }, []);
 
   const validationSchema = yup.object().shape({
-    confirmPassword: yup.string()
+    confirmPassword: yup
+      .string()
       .trim()
       .oneOf([yup.ref('password'), null], t('validation.matchPasswords'))
       .required(t('validation.isRequiredField')),
-    password: yup.string()
+    password: yup
+      .string()
       .trim()
       .min(6, t('validation.least6Chars'))
       .required(t('validation.isRequiredField')),
-    username: yup.string()
+    username: yup
+      .string()
       .trim()
       .min(3, t('validation.from3To20Chars'))
       .max(20, t('validation.from3To20Chars'))
@@ -65,6 +68,7 @@ const RegisterPage = () => {
           setRegisterFailedError('');
           toast.error(t('errors.connection'));
         }
+        setIsSubmitting(false);
       }
     },
 
@@ -76,7 +80,7 @@ const RegisterPage = () => {
       <Row className="justify-content-center align-content-center h-100">
         <Col sm={4}>
           <Form className="p-3" onSubmit={formik.handleSubmit}>
-            <h1 className="text-center mb-4">{ t('registration') }</h1>
+            <h1 className="text-center mb-4">{t('registration')}</h1>
             <fieldset disabled={isSubmitting}>
               <Form.Floating className="mb-3" controlid="floatingInput">
                 <Form.Control
@@ -94,8 +98,11 @@ const RegisterPage = () => {
                   required
                   value={formik.values.username}
                 />
-                <Form.Label htmlFor="username">{ t('username') }</Form.Label>
-                <Form.Control.Feedback type="invalid">{registerFailedError || (formik.touched.username && formik.errors.username)}</Form.Control.Feedback>
+                <Form.Label htmlFor="username">{t('username')}</Form.Label>
+                <Form.Control.Feedback type="invalid">
+                  {registerFailedError
+                    || (formik.touched.username && formik.errors.username)}
+                </Form.Control.Feedback>
               </Form.Floating>
               <Form.Floating className="mb-3" controlid="floatingInput">
                 <Form.Control
@@ -110,14 +117,19 @@ const RegisterPage = () => {
                   type="password"
                   value={formik.values.password}
                 />
-                <Form.Label htmlFor="password">{ t('password') }</Form.Label>
-                <Form.Control.Feedback type="invalid">{ formik.touched.password && formik.errors.password }</Form.Control.Feedback>
+                <Form.Label htmlFor="password">{t('password')}</Form.Label>
+                <Form.Control.Feedback type="invalid">
+                  {formik.touched.password && formik.errors.password}
+                </Form.Control.Feedback>
               </Form.Floating>
               <Form.Floating className="mb-3" controlid="floatingInput">
                 <Form.Control
                   autoComplete="current-password"
                   id="confirmPassword"
-                  isInvalid={formik.touched.confirmPassword && formik.errors.confirmPassword}
+                  isInvalid={
+                    formik.touched.confirmPassword
+                    && formik.errors.confirmPassword
+                  }
                   name="confirmPassword"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
@@ -126,10 +138,17 @@ const RegisterPage = () => {
                   type="password"
                   value={formik.values.confirmPassword}
                 />
-                <Form.Label htmlFor="confirmPassword">{ t('confirmPassword') }</Form.Label>
-                <Form.Control.Feedback type="invalid">{ formik.touched.confirmPassword && formik.errors.confirmPassword }</Form.Control.Feedback>
+                <Form.Label htmlFor="confirmPassword">
+                  {t('confirmPassword')}
+                </Form.Label>
+                <Form.Control.Feedback type="invalid">
+                  {formik.touched.confirmPassword
+                    && formik.errors.confirmPassword}
+                </Form.Control.Feedback>
               </Form.Floating>
-              <Button className="mt-2" type="submit" variant="outline-primary">{t('register')}</Button>
+              <Button className="mt-2" type="submit" variant="outline-primary">
+                {t('register')}
+              </Button>
             </fieldset>
           </Form>
         </Col>

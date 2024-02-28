@@ -6,13 +6,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { io } from 'socket.io-client';
 
-import apiRoutes from '../../api/api';
-import ChannelList from '../../components/ChannelList';
-import ChatWindow from '../../components/chatWindow';
-import getModalComponent from '../../components/modal/index';
-import useAuthorizationContext from '../../hooks/useAuthorizationContext';
-import { actions as channelsActions, selectors as channelsSelectors } from '../../slices/channelsSlice.js';
-import { actions as messagesActions, selectors as messagesSelectors } from '../../slices/messagesSlice.js';
+import apiRoutes from '../api/api';
+import ChannelList from '../components/ChannelList';
+import ChatWindow from '../components/chatWindow';
+import getModalComponent from '../components/modal/index';
+import useAuthorizationContext from '../hooks/useAuthorizationContext';
+import { actions as channelsActions, selectors as channelsSelectors } from '../slices/channelsSlice.js';
+import { actions as messagesActions, selectors as messagesSelectors } from '../slices/messagesSlice.js';
 
 const socket = io();
 

@@ -8,8 +8,8 @@ import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-import apiRoutes from '../../api/api';
-import useAuthorizationContext from '../../hooks/useAuthorizationContext.js';
+import apiRoutes from '../api/api';
+import useAuthorizationContext from '../hooks/useAuthorizationContext.js';
 
 const LoginPage = () => {
   const { setLogin } = useAuthorizationContext();

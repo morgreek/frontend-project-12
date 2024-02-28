@@ -5,11 +5,12 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import NavigationBar from './components/NavigationBar.jsx';
 import rollbarConfig from './configs/rollbar';
 import { AuthorizationContextProvider } from './context/AuthorizationContext.js';
-import LoginPage from './pages/LoginPage/LoginPage.jsx';
-import MainPage from './pages/MainPage/MainPage.jsx';
-import NotFoundPage from './pages/NotFoundPage/NotFoundPage.jsx';
-import RegisterPage from './pages/RegisterPage/RegisterPage.jsx';
-import PrivateRoutes from './utils/PrivateRoutes.jsx';
+import LoginPage from './pages/LoginPage.jsx';
+import MainPage from './pages/MainPage.jsx';
+import NotFoundPage from './pages/NotFoundPage.jsx';
+import RegisterPage from './pages/RegisterPage.jsx';
+import PrivateRoutes from './routes/PrivateRoutes.jsx';
+import routes from './routes/index.js';
 
 const App = () => (
   <Provider config={rollbarConfig}>
@@ -20,11 +21,11 @@ const App = () => (
             <NavigationBar />
             <Routes>
               <Route element={<PrivateRoutes />}>
-                <Route element={<MainPage />} exact path="/" />
+                <Route element={<MainPage />} exact path={routes.chat} />
               </Route>
-              <Route element={<LoginPage />} path="/login" />
-              <Route element={<RegisterPage />} path="/signup" />
-              <Route element={<NotFoundPage />} path="*" />
+              <Route element={<LoginPage />} path={routes.login} />
+              <Route element={<RegisterPage />} path={routes.signUp} />
+              <Route element={<NotFoundPage />} path={routes.notFound} />
             </Routes>
           </div>
         </BrowserRouter>
