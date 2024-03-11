@@ -31,14 +31,17 @@ const MainPage = () => {
 
   const addChannel = (name) => {
     setChangeChannel(true);
+    toast.info(t('channels.channelAdded'));
     socket.emit('newChannel', { name });
   };
 
   const renameChannel = (id, name) => {
+    toast.info(t('channels.channelRenamed'));
     socket.emit('renameChannel', { id, name });
   };
 
   const removeChannel = (id) => {
+    toast.info(t('channels.channelRemoved'));
     socket.emit('removeChannel', { id });
     if (currentChannelId === id) {
       setCurrentChannelId(1);
@@ -76,19 +79,16 @@ const MainPage = () => {
         setCurrentChannelId(channel.id);
         setChangeChannel(false);
       }
-      toast.info(t('channels.channelAdded'));
     });
     socket.on('removeChannel', ({ id }) => {
       if (id === currentChannelId) {
         setCurrentChannelId(1);
       } else {
         dispatch(channelsActions.removeChannel(id));
-        toast.info(t('channels.channelRemoved'));
       }
     });
     socket.on('renameChannel', ({ id, name }) => {
       dispatch(channelsActions.updateChannel({ changes: { name }, id }));
-      toast.info(t('channels.channelRenamed'));
     });
   }, [auth.userData, dispatch, currentChannelId, changeChannel, getHeaderRequest, t]);
 
