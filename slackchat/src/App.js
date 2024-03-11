@@ -3,14 +3,14 @@ import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import NavigationBar from './components/NavigationBar.jsx';
+import PrivateRoutes from './components/PrivateRoutes.jsx';
 import rollbarConfig from './configs/rollbar';
 import { AuthorizationContextProvider } from './context/AuthorizationContext.js';
 import LoginPage from './pages/LoginPage.jsx';
 import MainPage from './pages/MainPage.jsx';
 import NotFoundPage from './pages/NotFoundPage.jsx';
 import RegisterPage from './pages/RegisterPage.jsx';
-import PrivateRoutes from './routes/PrivateRoutes.jsx';
-import routes from './routes/index.js';
+import routes from './routes.js';
 
 const App = () => (
   <Provider config={rollbarConfig}>
