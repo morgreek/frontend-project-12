@@ -25,7 +25,7 @@ const App = () => (
               </Route>
               <Route element={<LoginPage />} path={routes.login} />
               <Route element={<RegisterPage />} path={routes.signUp} />
-              <Route element={<NotFoundPage />} path={routes.notFound} />
+              <Route element={<NotFoundPage />} path="*" />
             </Routes>
           </div>
         </BrowserRouter>
