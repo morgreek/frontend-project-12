@@ -1,4 +1,5 @@
 import i18next from 'i18next';
+import filter from 'leo-profanity';
 import { initReactI18next } from 'react-i18next';
 
 import App from './App';
@@ -16,6 +17,11 @@ const Init = () => {
       },
       resources,
     });
+
+  filter.clearList();
+  filter.add(filter.getDictionary('en'));
+  filter.add(filter.getDictionary('fr'));
+  filter.add(filter.getDictionary('ru'));
 
   return <App i18n={i18nInstance} />;
 };

@@ -1,5 +1,4 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import filter from 'leo-profanity';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
@@ -8,11 +7,6 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import InitApp from './init.js';
 import store from './slices/index.js';
-
-filter.clearList();
-filter.add(filter.getDictionary('en'));
-filter.add(filter.getDictionary('fr'));
-filter.add(filter.getDictionary('ru'));
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
