@@ -6,8 +6,7 @@ import { Provider } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import App from './App';
-import './i18next';
+import InitApp from './init.js';
 import store from './slices/index.js';
 
 filter.clearList();
@@ -19,7 +18,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <InitApp />
       <ToastContainer />
     </Provider>
   </React.StrictMode>,
