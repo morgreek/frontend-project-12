@@ -10,6 +10,7 @@ import { toast } from 'react-toastify';
 
 import apiRoutes from '../api/api';
 import useAuthorizationContext from '../hooks/useAuthorizationContext.js';
+import routes from '../routes';
 
 const LoginPage = () => {
   const { setLogin } = useAuthorizationContext();
@@ -82,7 +83,7 @@ const LoginPage = () => {
             <Button className="mt-2" type="submit" variant="outline-primary">{ t('logIn') }</Button>
             <div className="text-center">
               <span>{ `${t('noAppAccount')} `}</span>
-              <Link to="/signup">{ t('registration') }</Link>
+              <Link to={routes.signUp}>{ t('registration') }</Link>
             </div>
           </Form>
         </Col>
