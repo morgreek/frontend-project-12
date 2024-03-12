@@ -13,7 +13,7 @@ start-backend:
 start-frontend:
 	make -C slackchat start
 
-start-deploy:
+develop:
 	make start-backend & make start-frontend
 
 lint-slack:
