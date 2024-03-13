@@ -53,6 +53,7 @@ const ChannelItem = (props) => {
     currentChannel,
     onRemoveChannel,
     onRenameChannel,
+    reffer,
   } = props;
   const { id, name, removable } = channel;
   const variant = id === currentChannel?.id ? 'secondary' : null;
@@ -63,7 +64,7 @@ const ChannelItem = (props) => {
   const changeChannelId = (newId) => dispatch(channelsActions.setCurrentChannelId(newId));
 
   return (
-    <li className="nav-item w-100" key={id}>
+    <li className="nav-item w-100" key={id} ref={reffer}>
       {
         removable
           ? renderEditableChannel({

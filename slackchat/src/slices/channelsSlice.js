@@ -14,7 +14,7 @@ const slice = createSlice(
       removeChannel: channelsAdapter.removeOne,
       updateChannel: channelsAdapter.updateOne,
       setCurrentChannelId: (state, { payload }) => {
-        // eslint-disable-next-line no-param-reassign
+        // eslint-disable-next-line
         state.currentChannelId = payload;
       },
     },

@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import Col from 'react-bootstrap/Col';
 import { useTranslation } from 'react-i18next';
 
@@ -5,6 +6,8 @@ import ChannelItem from './ChannelItem';
 
 const ChannelList = (props) => {
   const { t } = useTranslation();
+
+  const currentChannelRef = useRef();
 
   const {
     addChannel,
@@ -14,6 +17,12 @@ const ChannelList = (props) => {
     renameChannel,
     showModal,
   } = props;
+
+  const scrollToChannel = (ref) => {
+    ref?.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  };
+
+  useEffect(() => scrollToChannel(currentChannelRef), [channel]);
 
   const onAddChannel = () => {
     showModal({
@@ -58,6 +67,7 @@ const ChannelList = (props) => {
         key={item?.id}
         onRemoveChannel={onRemoveChannel}
         onRenameChannel={onRenameChannel}
+        reffer={item.id === currentChannel?.id ? currentChannelRef : null}
       />
     );
     //
