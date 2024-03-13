@@ -13,7 +13,7 @@ import useAuthorizationContext from '../hooks/useAuthorizationContext.js';
 import routes from '../routes';
 
 const LoginPage = () => {
-  const { setLogin } = useAuthorizationContext();
+  const { setLogin, saveUserData } = useAuthorizationContext();
   const loginInput = useRef();
   const [loginFailedError, setLoginFailedError] = useState('');
   const navigateTo = useNavigate();
@@ -30,7 +30,7 @@ const LoginPage = () => {
       try {
         const response = await axios.post(apiRoutes.login, values);
         setLogin(response.data);
-        localStorage.setItem('user', JSON.stringify(response.data));
+        saveUserData(response.data);
         // сервер отвечает: reply.send({ token, username });
         navigateTo('/');
       } catch (e) {
