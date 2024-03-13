@@ -12,7 +12,6 @@ const ChannelList = (props) => {
     channels,
     removeChannel,
     renameChannel,
-    setActive,
     showModal,
   } = props;
 
@@ -59,7 +58,6 @@ const ChannelList = (props) => {
         key={item?.id}
         onRemoveChannel={onRemoveChannel}
         onRenameChannel={onRenameChannel}
-        selectChannel={setActive}
       />
     );
     //

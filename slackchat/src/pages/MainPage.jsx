@@ -4,48 +4,56 @@ import { Container, Row } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { io } from 'socket.io-client';
 
 import apiRoutes from '../api/api';
 import ChannelList from '../components/ChannelList';
 import ChatWindow from '../components/chatWindow';
 import getModalComponent from '../components/modal/index';
 import useAuthorizationContext from '../hooks/useAuthorizationContext';
+import useSelectorChannel from '../hooks/useSelectorChannel';
 import { actions as channelsActions, selectors as channelsSelectors } from '../slices/channelsSlice.js';
 import { actions as messagesActions, selectors as messagesSelectors } from '../slices/messagesSlice.js';
 
-const socket = io();
-
-const MainPage = () => {
+const MainPage = ({ socket }) => {
   const { t } = useTranslation();
   const auth = useAuthorizationContext();
   const dispatch = useDispatch();
   const [modalState, setModalState] = useState({});
   const channels = useSelector(channelsSelectors.selectAll);
-  const [currentChannelId, setCurrentChannelId] = useState(1);
-  const [changeChannel, setChangeChannel] = useState(false);
+  const currentChannelId = useSelectorChannel();
   const currentChannel = useSelector((state) => channelsSelectors
     .selectById(state, currentChannelId));
   const channelMessages = useSelector(messagesSelectors.selectAll)
     .filter(({ channelId }) => channelId === currentChannelId);
 
   const addChannel = (name) => {
-    setChangeChannel(true);
-    toast.info(t('channels.channelAdded'));
-    socket.emit('newChannel', { name });
+    socket.emit('newChannel', { name }, (response) => {
+      const { status, data: { id } } = response;
+      if (status === 'ok') {
+        dispatch(channelsActions.setCurrentChannelId(id));
+        toast.info(t('channels.channelAdded'));
+      }
+    });
   };
 
   const renameChannel = (id, name) => {
-    toast.info(t('channels.channelRenamed'));
-    socket.emit('renameChannel', { id, name });
+    socket.emit('renameChannel', { id, name }, ({ status }) => {
+      if (status === 'ok') {
+        toast.info(t('channels.channelRenamed'));
+      }
+    });
   };
 
   const removeChannel = (id) => {
-    toast.info(t('channels.channelRemoved'));
-    socket.emit('removeChannel', { id });
-    if (currentChannelId === id) {
-      setCurrentChannelId(1);
-    }
+    socket.emit('removeChannel', { id }, ({ status }) => {
+      if (status === 'ok') {
+        if (currentChannelId === id) {
+          dispatch(channelsActions.setCurrentChannelId(1));
+        }
+        dispatch(channelsActions.removeChannel(id));
+        toast.info(t('channels.channelRemoved'));
+      }
+    });
   };
 
   const submitMessage = (message) => {
@@ -55,13 +63,12 @@ const MainPage = () => {
     );
   };
 
-  const getHeaderRequest = () => (auth?.userData?.token
-    ? { Authorization: `Bearer ${auth.userData.token}` }
-    : {});
-
   useEffect(() => {
     const getData = async () => {
-      const { data } = await axios.get(apiRoutes.data, { headers: getHeaderRequest() });
+      const headers = auth?.userData?.token
+        ? { Authorization: `Bearer ${auth.userData.token}` }
+        : null;
+      const { data } = await axios.get(apiRoutes.data, { headers });
       dispatch(channelsActions.addChannels(data.channels));
       dispatch(messagesActions.addMessages(data.messages));
     };
@@ -70,27 +77,7 @@ const MainPage = () => {
 
     socket.removeAllListeners();
     socket.connect();
-    socket.on('newMessage', (message) => {
-      dispatch(messagesActions.addMessage(message));
-    });
-    socket.on('newChannel', (channel) => {
-      dispatch(channelsActions.addChannel(channel));
-      if (changeChannel) {
-        setCurrentChannelId(channel.id);
-        setChangeChannel(false);
-      }
-    });
-    socket.on('removeChannel', ({ id }) => {
-      if (id === currentChannelId) {
-        setCurrentChannelId(1);
-      } else {
-        dispatch(channelsActions.removeChannel(id));
-      }
-    });
-    socket.on('renameChannel', ({ id, name }) => {
-      dispatch(channelsActions.updateChannel({ changes: { name }, id }));
-    });
-  }, [auth.userData, dispatch, currentChannelId, changeChannel, getHeaderRequest, t]);
+  }, [auth.userData, dispatch, currentChannelId, t]);
 
   const renderModal = (parameters) => {
     const {
@@ -129,7 +116,6 @@ const MainPage = () => {
           channels={channels}
           removeChannel={removeChannel}
           renameChannel={renameChannel}
-          setActive={setCurrentChannelId}
           showModal={setModalState}
         />
         <ChatWindow

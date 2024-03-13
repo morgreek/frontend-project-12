@@ -1,5 +1,4 @@
 import { ErrorBoundary, Provider } from '@rollbar/react';
-import React from 'react';
 import { I18nextProvider } from 'react-i18next';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
@@ -12,8 +11,8 @@ import MainPage from './pages/MainPage.jsx';
 import NotFoundPage from './pages/NotFoundPage.jsx';
 import RegisterPage from './pages/RegisterPage.jsx';
 import routes from './routes.js';
-// { i18n }
-const App = ({ i18n }) => (
+
+const App = ({ i18n, socket }) => (
   <Provider config={rollbarConfig}>
     <ErrorBoundary>
       <AuthorizationContextProvider>
@@ -23,7 +22,7 @@ const App = ({ i18n }) => (
               <NavigationBar />
               <Routes>
                 <Route element={<PrivateRoutes />}>
-                  <Route element={<MainPage />} exact path={routes.chat} />
+                  <Route element={<MainPage socket={socket} />} exact path={routes.chat} />
                 </Route>
                 <Route element={<LoginPage />} path={routes.login} />
                 <Route element={<RegisterPage />} path={routes.signUp} />

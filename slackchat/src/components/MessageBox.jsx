@@ -5,7 +5,6 @@ import useAuthorizationContext from '../hooks/useAuthorizationContext';
 const MessagesBox = ({ messages }) => {
   const messagesRef = useRef();
   const auth = useAuthorizationContext();
-  console.log(auth?.userData?.username);
   useEffect(() => {
     const { current } = messagesRef;
 

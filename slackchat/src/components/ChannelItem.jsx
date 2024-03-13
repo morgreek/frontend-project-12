@@ -1,14 +1,20 @@
 import { Button, ButtonGroup, Dropdown } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
+
+import { actions as channelsActions } from '../slices/channelsSlice.js';
 
 const renderChannelButton = (parameters) => {
   const {
-    id, name, selectChannel, variant,
+    id,
+    name,
+    changeChannelId,
+    variant,
   } = parameters;
   return (
     <Button
       className="w-100 rounded-0 text-start text-truncate"
-      onClick={() => selectChannel(id)}
+      onClick={() => changeChannelId(id)}
       type="button"
       variant={variant || null}
     >
@@ -20,13 +26,13 @@ const renderChannelButton = (parameters) => {
 
 const renderEditableChannel = (parameters) => {
   const {
-    id, name, onRemoveChannel, onRenameChannel, selectChannel, t, variant,
+    id, name, onRemoveChannel, onRenameChannel, changeChannelId, t, variant,
   } = parameters;
 
   return (
     <Dropdown as={ButtonGroup} className="d-flex">
       {renderChannelButton({
-        id, name, selectChannel, variant,
+        id, name, changeChannelId, variant,
       })}
 
       <Dropdown.Toggle className="flex-grow-0" id="dropdown-split-basic" split variant={variant || null}>
@@ -43,22 +49,28 @@ const renderEditableChannel = (parameters) => {
 
 const ChannelItem = (props) => {
   const {
-    channel, currentChannel, onRemoveChannel, onRenameChannel, selectChannel,
+    channel,
+    currentChannel,
+    onRemoveChannel,
+    onRenameChannel,
   } = props;
   const { id, name, removable } = channel;
-  const variant = id === currentChannel.id ? 'secondary' : null;
+  const variant = id === currentChannel?.id ? 'secondary' : null;
 
   const { t } = useTranslation();
+
+  const dispatch = useDispatch();
+  const changeChannelId = (newId) => dispatch(channelsActions.setCurrentChannelId(newId));
 
   return (
     <li className="nav-item w-100" key={id}>
       {
         removable
           ? renderEditableChannel({
-            id, name, onRemoveChannel, onRenameChannel, selectChannel, t, variant,
+            id, name, onRemoveChannel, onRenameChannel, changeChannelId, t, variant,
           })
           : renderChannelButton({
-            id, name, selectChannel, variant,
+            id, name, changeChannelId, variant,
           })
       }
     </li>
