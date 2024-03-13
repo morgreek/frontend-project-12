@@ -8,7 +8,7 @@ const AuthorizationContextProvider = ({ children }) => {
     return userLocal ? JSON.parse(userLocal) : null;
   });
 
-  const authState = useMemo(() => ({ setLogin, userData }), userData);
+  const authState = useMemo(() => ({ setLogin, userData }), [userData]);
 
   return (
     <AuthorizationContext.Provider value={authState}>
