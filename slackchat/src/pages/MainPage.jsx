@@ -75,8 +75,6 @@ const MainPage = ({ socket }) => {
 
     getData();
 
-    socket.removeAllListeners();
-    socket.connect();
   }, [auth.userData, dispatch, currentChannelId, t]);
 
   const renderModal = (parameters) => {

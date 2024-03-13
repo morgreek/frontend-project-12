@@ -27,11 +27,11 @@ const Init = () => {
   filter.add(filter.getDictionary('fr'));
   filter.add(filter.getDictionary('ru'));
 
-  const socket = io();
   const dispatch = useDispatch();
 
   const channelId = useSelectorChannel();
 
+  const socket = io();
   socket.on('newMessage', (message) => {
     dispatch(messagesActions.addMessage(message));
   });
