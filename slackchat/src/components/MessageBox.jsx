@@ -23,7 +23,7 @@ const MessagesBox = ({ messages }) => {
     }
 
     return (
-      <div className={classes.join(' ')} id={id}>
+      <div className={classes.join(' ')} key={id}>
         <b>{`${username}: `}</b>
         {body}
       </div>
