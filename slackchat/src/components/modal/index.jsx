@@ -1,9 +1,9 @@
+import ChannelModal from './ChannelModal';
 import ConfirmModal from './ConfirmModal';
-import EditChannelModal from './EditChannelModal';
 
 const modals = {
-  addChannel: EditChannelModal,
-  editChannel: EditChannelModal,
+  addChannel: ChannelModal,
+  editChannel: ChannelModal,
   removeChannel: ConfirmModal,
 };
 

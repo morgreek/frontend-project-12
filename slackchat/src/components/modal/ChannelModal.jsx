@@ -7,7 +7,7 @@ import * as yup from 'yup';
 
 import ConfirmButtons from './ConfirmButtons';
 
-const EditChannelModal = ({ children, ...rest }) => {
+const ChannelModal = ({ children, ...rest }) => {
   const { t } = useTranslation();
   const {
     btnVariant,
@@ -45,10 +45,10 @@ const EditChannelModal = ({ children, ...rest }) => {
     channelNames: yup.array(),
     name: yup.string()
       .trim()
-      .min(3, 'От 3 до 20 символов')
-      .max(20, 'От 3 до 20 символов')
-      .required('Обязательное поле')
-      .notOneOf(channelsNames, 'Должно быть уникальным'),
+      .min(3, t('validation.from3To20Chars'))
+      .max(20, t('validation.from3To20Chars'))
+      .required(t('validation.isRequiredField'))
+      .notOneOf(channelsNames, t('validation.mustUnique')),
   });
 
   const formik = useFormik({
@@ -103,4 +103,4 @@ const EditChannelModal = ({ children, ...rest }) => {
   );
 };
 
-export default EditChannelModal;
+export default ChannelModal;
