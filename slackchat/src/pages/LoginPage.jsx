@@ -32,7 +32,7 @@ const LoginPage = () => {
         setLogin(response.data);
         saveUserData(response.data);
         // сервер отвечает: reply.send({ token, username });
-        navigateTo('/');
+        navigateTo(routes.chat);
       } catch (e) {
         if (e.response.status === 401) {
           setLoginFailedError(t('errors.authorization'));
