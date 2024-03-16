@@ -11,6 +11,7 @@ import * as yup from 'yup';
 
 import apiRoutes from '../api/api';
 import useAuthorizationContext from '../hooks/useAuthorizationContext.js';
+import routes from '../routes';
 
 const RegisterPage = () => {
   const { setLogin } = useAuthorizationContext();
@@ -57,11 +58,9 @@ const RegisterPage = () => {
         const response = await axios.post(apiRoutes.signup, values);
         setLogin(response.data);
         setIsSubmitting(false);
-        console.log('registration succesfull');
 
-        navigateTo('/');
+        navigateTo(routes.chat);
       } catch (e) {
-        console.log(`registration response error${e.response.status}`);
         if (e.response.status === 409) {
           setRegisterFailedError(t('validation.areUserExists'));
         } else {
