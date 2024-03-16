@@ -1,11 +1,14 @@
 import { useEffect, useRef } from 'react';
 import Col from 'react-bootstrap/Col';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 
+import { actions as modalsActions } from '../slices/modalSlice';
 import ChannelItem from './ChannelItem';
 
 const ChannelList = (props) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
 
   const currentChannelRef = useRef();
 
@@ -25,36 +28,36 @@ const ChannelList = (props) => {
   useEffect(() => scrollToChannel(currentChannelRef), [channel]);
 
   const onAddChannel = () => {
+    dispatch(modalsActions.setModalCode('addChannel'));
     showModal({
       channels,
       confirmAction: addChannel,
-      modalCode: 'addChannel',
       title: t('channels.addChannel'),
     });
   };
 
   const onRenameChannel = (id) => {
     const currentChannel = channels.filter((item) => item.id === id)[0];
-
+    dispatch(modalsActions.setModalCode('editChannel'));
     showModal({
       channel: currentChannel,
       channels,
       confirmAction: renameChannel,
-      modalCode: 'editChannel',
       title: t('channels.renameChannel'),
     });
   };
 
   const onRemoveChannel = (id) => {
-    function removeFunc() {
+    const removeFunc = () => {
       removeChannel(id);
-    }
+    };
+
+    dispatch(modalsActions.setModalCode('removeChannel'));
     showModal({
       btnVariant: 'danger',
       confirmAction: removeFunc,
       confirmButton: t('remove'),
       confirmText: t('areYouSure'),
-      modalCode: 'removeChannel',
       title: t('channels.removeChannel'),
     });
   };

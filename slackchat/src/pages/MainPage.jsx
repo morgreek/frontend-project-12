@@ -15,6 +15,7 @@ import useSelectorChannel from '../hooks/useSelectorChannel';
 import routes from '../routes';
 import { actions as channelsActions, selectors as channelsSelectors } from '../slices/channelsSlice.js';
 import { actions as messagesActions, selectors as messagesSelectors } from '../slices/messagesSlice.js';
+import { actions as modalsActions } from '../slices/modalSlice';
 
 const MainPage = ({ socket }) => {
   const { t } = useTranslation();
@@ -22,6 +23,7 @@ const MainPage = ({ socket }) => {
   const auth = useAuthorizationContext();
   const dispatch = useDispatch();
   const [modalState, setModalState] = useState({});
+  const modalCode = useSelector((state) => state.modals.modalCode);
   const channels = useSelector(channelsSelectors.selectAll);
   const currentChannelId = useSelectorChannel();
   const currentChannel = useSelector((state) => channelsSelectors
@@ -90,7 +92,7 @@ const MainPage = ({ socket }) => {
     getData();
   }, [auth.userData, dispatch, currentChannelId, t]);
 
-  const renderModal = (parameters) => {
+  const renderModal = (code, parameters) => {
     const {
       btnVariant,
       channel,
@@ -98,10 +100,9 @@ const MainPage = ({ socket }) => {
       confirmAction,
       confirmButton,
       confirmText,
-      modalCode,
       title,
     } = parameters;
-    const ModalComponent = getModalComponent(modalCode);
+    const ModalComponent = getModalComponent(code);
     if (!ModalComponent) return null;
 
     return (
@@ -112,7 +113,7 @@ const MainPage = ({ socket }) => {
         confirmAction={confirmAction}
         confirmButton={confirmButton}
         confirmText={confirmText}
-        onHide={() => setModalState({})}
+        onHide={() => dispatch(modalsActions.clearModalCode())}
         title={title}
       />
     );
@@ -135,7 +136,7 @@ const MainPage = ({ socket }) => {
           submitMessage={submitMessage}
         />
       </Row>
-      {renderModal(modalState)}
+      {renderModal(modalCode, modalState)}
     </Container>
   );
 };
