@@ -21,6 +21,7 @@ const translations = {
     logIn: 'Войти',
     logOut: 'Выйти',
     messages: {
+      ariaLabel: 'Новое сообщение',
       enterMessage: 'Введите сообщение...',
       messages_few: '{{count}} сообщения',
       messages_many: '{{count}} сообщений',

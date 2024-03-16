@@ -20,7 +20,7 @@ const MessageSendField = ({ submitMessage }) => {
       <form className="py-1 border rounded-2" noValidate="" onSubmit={submitHandler}>
         <div className="input-group has-validation">
           <input
-            aria-label="Новое сообщение"
+            aria-label={t('messages.ariaLabel')}
             className="border-0 p-0 ps-2 form-control"
             name="body"
             onChange={(e) => setMessage(e.target.value)}
