@@ -17,6 +17,7 @@ const translations = {
     errors: {
       authorization: 'Неверные имя пользователя или пароль',
       connection: 'Ошибка соединения',
+      page404: 'Упс! Страница не найдена',
     },
     logIn: 'Войти',
     logOut: 'Выйти',
