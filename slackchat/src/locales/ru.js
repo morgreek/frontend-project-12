@@ -24,6 +24,7 @@ const translations = {
     messages: {
       ariaLabel: 'Новое сообщение',
       enterMessage: 'Введите сообщение...',
+      sendMessage: 'Отправить',
       messages_few: '{{count}} сообщения',
       messages_many: '{{count}} сообщений',
       messages_one: '{{count}} сообщение',
