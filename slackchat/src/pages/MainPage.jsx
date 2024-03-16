@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Container, Row } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import apiRoutes from '../api/api';
@@ -11,11 +12,13 @@ import ChatWindow from '../components/chatWindow';
 import getModalComponent from '../components/modal/index';
 import useAuthorizationContext from '../hooks/useAuthorizationContext';
 import useSelectorChannel from '../hooks/useSelectorChannel';
+import routes from '../routes';
 import { actions as channelsActions, selectors as channelsSelectors } from '../slices/channelsSlice.js';
 import { actions as messagesActions, selectors as messagesSelectors } from '../slices/messagesSlice.js';
 
 const MainPage = ({ socket }) => {
   const { t } = useTranslation();
+  const navigateTo = useNavigate();
   const auth = useAuthorizationContext();
   const dispatch = useDispatch();
   const [modalState, setModalState] = useState({});
@@ -68,9 +71,20 @@ const MainPage = ({ socket }) => {
       const headers = auth?.userData?.token
         ? { Authorization: `Bearer ${auth.userData.token}` }
         : null;
-      const { data } = await axios.get(apiRoutes.data, { headers });
-      dispatch(channelsActions.addChannels(data.channels));
-      dispatch(messagesActions.addMessages(data.messages));
+      try {
+        const { data } = await axios.get(apiRoutes.data, { headers });
+        dispatch(channelsActions.addChannels(data.channels));
+        dispatch(messagesActions.addMessages(data.messages));
+      } catch (e) {
+        if (e.response.status === 401) {
+          auth.setLogin(null);
+          localStorage.clear();
+          navigateTo(routes.login);
+          return;
+        }
+
+        toast.error(t('errors.connection'));
+      }
     };
 
     getData();
